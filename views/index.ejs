@@ -1,0 +1,16 @@
+<form action="/person/add" method="post">
+    <label>Nombre</label>
+    <input type="text" name="name" value="----">
+    <br>
+    <label>Year</label>
+    <input type="text" name="born" value="----">
+    <br>
+    <input type="submit" value="Go">
+</form>
+
+<h1>Resultados<h1>
+<ul>
+<% people.forEach(function(person){ %>
+        <li><%= person.name %></li>
+<% }) %>
+</ul>
