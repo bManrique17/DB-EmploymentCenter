@@ -1,0 +1,97 @@
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Centro de Empleo Jonny Loco</title>
+  </head>
+  <body>
+     <h1>Empresas</h1>
+     <p>En esta seccion podra agregar y eliminar empresas a la agencia, asi como
+        modificar los datos de cada una. Para modificar, seleccione la empresa
+        deseada, altere un campo y presione modificar.</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Seleccione</th>
+          <th scope="col">RTN</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Director</th>
+        </tr>
+      </thead>
+      <tbody>
+          <script type="text/javascript">
+              var matrizEmpresas = new Array();
+              function colocarValores(c){
+                  $("#a").val(matrizEmpresas[c][0]);
+                  $("#b").val(matrizEmpresas[c][1]);
+                  $("#c").val(matrizEmpresas[c][2]);
+                  $("#d").val(matrizEmpresas[c][3]);
+              };
+          </script>
+          <% empresas.forEach(function(empresa){ %>
+             <tr>
+                 <script type="text/javascript">
+                    matrizEmpresas.push(['<%= empresa.rtn %>','<%= empresa.nombre %>','<%= empresa.director %>','<%= empresa.direccion %>']);
+                    cont++;
+                 </script>
+                  <td><button type="button" id=<%= empresa.indice %> class='btn btn-danger' onclick="colocarValores(this.id)">Ver</button></td>
+                  <td><%= empresa.rtn %></td>
+                  <td><%= empresa.nombre %></td>
+                  <td><%= empresa.director %></td>
+            </tr>
+          <% }) %>
+      </tbody>
+    </table>
+    <h2>Datos de la empresa seleccionada</h2>
+    <form class="" action="/crud" method="post">
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>RTN</span>
+    		<input type=text id="a" name="a" value= "" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Nombre de empresa</span>
+    		<input type=text id="b" name="b" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Director</span>
+    		<input type=text id="c" name="c" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Direccion</span>
+            </div>
+            <textarea class="form-control" id="d" name="d" value="" aria-label="With textarea"></textarea>
+        </div>
+        <br>
+
+        <section id="botones" class="main row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
+                <td><button type="submit" id="1" class='btn btn-danger' onclick="senuelo(this.id)" >Crear</button></td>
+            </div>
+            <div class="col-md-2">
+                <td><button type="submit" id="2" class='btn btn-danger' onclick="senuelo(this.id)">Modificar</button></td>
+            </div>
+            <div class="col-md-2">
+                <td><button type="submit" id="3" class='btn btn-danger' onclick="senuelo(this.id)">Eliminar</button></td>
+            </div>
+        </section>
+        <input type=text id="opcion" style="display:none" name="opcion" value="" class=form-control aria-describedby=basic-addon1>
+        <script type="text/javascript">
+            function senuelo(c){                                                
+                $("#opcion").val(c);
+            };
+        </script>
+    </form>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

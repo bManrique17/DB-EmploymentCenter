@@ -17,48 +17,126 @@ app.use(express.static(path.join(__dirname, 'public')));
 var driver = neo4j.driver('bolt://localhost',neo4j.auth.basic('neo4j','1'));
 var session = driver.session();
 
-var query = 'MATCH (n) RETURN n;';
-
 app.get('/', function(req, res){
-    session
-        .run(query)
-        .then(function(result){
-            var array = [];
-            result.records.forEach(function(record){
-                array.push({
-                    name: record._fields[0].properties.name,
-                    born: record._fields[0].properties.born
-                });
-            });
-            res.render('index',{
-                people: array
-            });
-        })
-        .catch(function(err){
-            console.log(err);
-        });
+    res.render('index',{
+    });
 });
 
-app.post('/person/add',function(req, res){
-    var name = req.body.name;
-    var born = req.body.born;
-    console.log(name);
+var query = 'MATCH (n:Empresa) RETURN n;';
 
-    var query = "CREATE(n:Person {name:{a},born:{b}}) RETURN n.name;"
+app.post('/adminEmpresa', function(req, res){
     session
-        .run(query,{a:name, b:born})
-        .then(function(result){
-            res.redirect('/');
-            session.close();
-        })
-        .catch(function(err){
-            console.log(err);
+    .run(query)
+    .then(function(result){
+        var array = [];
+        var cont = 0;
+        result.records.forEach(function(record){
+            array.push({
+                rtn: record._fields[0].properties.rtn,
+                nombre: record._fields[0].properties.nombre,
+                director: record._fields[0].properties.director,
+                direccion: record._fields[0].properties.direccion,
+                indice: cont
+            });
+            cont++;
         });
+        res.render('adminEmpresa',{
+            empresas: array
+        });
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+});
 
-    res.redirect('/');
+app.post('/crud', function(req, res){
+    var query = "";
+    var rtn = req.body.a;
+    var nombre = req.body.b;
+    var director = req.body.c;
+    var direccion = req.body.d;
+    var opcion = req.body.opcion;
+    switch (opcion) {
+        case "1":
+            query = "CREATE(n:Empresa {direccion:{a},nombre:{b},rtn:{c},director:{d}}) RETURN n.nombre;"
+            session
+                .run(query,{a:direccion, b:nombre, c:rtn, d:director})
+                .then(function(result){
+                    query = 'MATCH (n:Empresa) RETURN n;';
+
+                        session
+                        .run(query)
+                        .then(function(result){
+                            var array = [];
+                            var cont = 0;
+                            result.records.forEach(function(record){
+                                array.push({
+                                    rtn: record._fields[0].properties.rtn,
+                                    nombre: record._fields[0].properties.nombre,
+                                    director: record._fields[0].properties.director,
+                                    direccion: record._fields[0].properties.direccion,
+                                    indice: cont
+                                });
+                                cont++;
+                            });
+                            res.render('adminEmpresa',{
+                                empresas: array
+                            });
+                        })
+                        .catch(function(err){
+                            console.log(err);
+                        });
+                    session.close();
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
+            break;
+        case "2":
+
+
+            break;
+        case "3":
+            query = "MATCH (n:Empresa {rtn: {a}}) DELETE n;"
+            session
+                .run(query,{a:rtn})
+                .then(function(result){
+                    query = 'MATCH (n:Empresa) RETURN n;';
+                        session
+                        .run(query)
+                        .then(function(result){
+                            var array = [];
+                            var cont = 0;
+                            result.records.forEach(function(record){
+                                array.push({
+                                    rtn: record._fields[0].properties.rtn,
+                                    nombre: record._fields[0].properties.nombre,
+                                    director: record._fields[0].properties.director,
+                                    direccion: record._fields[0].properties.direccion,
+                                    indice: cont
+                                });
+                                cont++;
+                            });
+                            res.render('adminEmpresa',{
+                                empresas: array
+                            });
+                        })
+                        .catch(function(err){
+                            console.log(err);
+                        });
+                    session.close();
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
+            break;
+
+    }
+
+
 });
 
 app.listen(3000);
-console.log('Server recio')
+console.log('Employment Center Server running at port 3000');
 
 module.exports = app;
