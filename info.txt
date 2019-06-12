@@ -1,0 +1,86 @@
+Persona Datos personales
+	Id_persona
+	Primer_nombre
+	Segundo_nombre
+	Primer_apellido
+	Segundo_apellido
+	Celular
+	Correo
+	Estado_civil
+
+Persona Datos Familiares
+	Id_padre
+	Nombres_padre
+	Apellidos_padre
+	Celular_padre
+	Id_madre
+	Nombres_madre
+	Apellidos_madre
+	Celular_madre
+
+Persona Datos Sanitarios
+
+	enfermedad
+	medicamentos
+	hospitalizado (si/no)
+
+
+Persona Datos legales
+
+	Servicio_militar
+	Cárcel
+
+Persona Datos Requisitos
+
+	Puesto_si
+	Puesto_no
+
+Persona Datos Profesionales
+
+	Conocimiento
+
+Persona Datos Laborales
+	Empresa
+	Puesto
+	Años_experiencia
+
+Persona Datos Condiciones
+
+	Tipo_contrato
+	Salario
+
+Persona Datos Academico
+
+	Escuela
+	Colegio
+	Univesidad
+
+Empresa
+	Nombre
+	RTN
+	Director
+	Dirección
+
+Empleo
+
+	Id_empleo
+	Tipo_Empleo
+	Puestos_trabajo
+	Requisito_personal
+	Requisito_academico
+	Requisitos_sanitario
+	Requisitos_legal
+	Requisito_profesional
+	Requisito_laboral
+	Lugar
+	Sueldo	Condiciones
+
+Solicitud_empleo
+
+	Id_solicitud(NA)
+	Id_empleo
+
+Persona_solicitud
+
+	Id_persona
+	Id_solicitud

@@ -93,8 +93,39 @@ app.post('/crud', function(req, res){
                 });
             break;
         case "2":
+            query = "MERGE (n:Empresa {rtn:{a}}) SET n.nombre = {b}, n.director = {c}, n.direccion = {d} RETURN n;"            
+            session
+                .run(query,{a:rtn, b:nombre, c:director, d:direccion})
+                .then(function(result){
+                    query = 'MATCH (n:Empresa) RETURN n;';
 
-
+                        session
+                        .run(query)
+                        .then(function(result){
+                            var array = [];
+                            var cont = 0;
+                            result.records.forEach(function(record){
+                                array.push({
+                                    rtn: record._fields[0].properties.rtn,
+                                    nombre: record._fields[0].properties.nombre,
+                                    director: record._fields[0].properties.director,
+                                    direccion: record._fields[0].properties.direccion,
+                                    indice: cont
+                                });
+                                cont++;
+                            });
+                            res.render('adminEmpresa',{
+                                empresas: array
+                            });
+                        })
+                        .catch(function(err){
+                            console.log(err);
+                        });
+                    session.close();
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
             break;
         case "3":
             query = "MATCH (n:Empresa {rtn: {a}}) DELETE n;"
@@ -130,10 +161,7 @@ app.post('/crud', function(req, res){
                     console.log(err);
                 });
             break;
-
     }
-
-
 });
 
 app.listen(3000);
