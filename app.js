@@ -49,7 +49,35 @@ app.post('/adminEmpresa', function(req, res){
     });
 });
 
-app.post('/crud', function(req, res){
+app.post('/adminPersona', function(req, res){
+    query = 'MATCH (n:Persona) RETURN n;';
+    session
+    .run(query)
+    .then(function(result){
+        var array = [];
+        var cont = 0;
+        result.records.forEach(function(record){
+            array.push({
+                id: record._fields[0].properties.id,
+                nombre: record._fields[0].properties.nombre,
+                celular: record._fields[0].properties.celular,
+                correo: record._fields[0].properties.correo,
+                edad: record._fields[0].properties.edad,
+                estadoCivil: record._fields[0].properties.estadoCivil,
+                indice: cont
+            });
+            cont++;
+        });
+        res.render('adminPersona',{
+            personas: array
+        });
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+});
+
+app.post('/crudEmpresa', function(req, res){
     var query = "";
     var rtn = req.body.a;
     var nombre = req.body.b;
@@ -93,7 +121,7 @@ app.post('/crud', function(req, res){
                 });
             break;
         case "2":
-            query = "MERGE (n:Empresa {rtn:{a}}) SET n.nombre = {b}, n.director = {c}, n.direccion = {d} RETURN n;"            
+            query = "MERGE (n:Empresa {rtn:{a}}) SET n.nombre = {b}, n.director = {c}, n.direccion = {d} RETURN n;"
             session
                 .run(query,{a:rtn, b:nombre, c:director, d:direccion})
                 .then(function(result){
@@ -150,6 +178,130 @@ app.post('/crud', function(req, res){
                             });
                             res.render('adminEmpresa',{
                                 empresas: array
+                            });
+                        })
+                        .catch(function(err){
+                            console.log(err);
+                        });
+                    session.close();
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
+            break;
+    }
+});
+//persona.id %>','<%= persona.nombre %>','<%= persona.celular %>','<%= persona.correo %>','<%= persona.edad %>','<%= persona.estadoCivil %>']);
+app.post('/crudPersona', function(req, res){
+    var query = "";
+    var id = req.body.a;
+    var nombre = req.body.b;
+    var celular = req.body.c;
+    var correo = req.body.d;
+    var edad = req.body.e;
+    var estadoCivil = req.body.f;
+    var opcion = req.body.opcion;
+    switch (opcion) {
+        case "1":
+            query = "CREATE(n:Persona {id:{a},nombre:{b},celular:{c},correo:{d},edad:{e},estadoCivil:{f}}) RETURN n.nombre;"
+            session
+                .run(query,{a:id, b:nombre, c:celular, d:correo, e:edad, f:estadoCivil})
+                .then(function(result){
+                    query = 'MATCH (n:Persona) RETURN n;';
+
+                        session
+                        .run(query)
+                        .then(function(result){
+                            var array = [];
+                            var cont = 0;
+                            result.records.forEach(function(record){
+                                array.push({
+                                    id: record._fields[0].properties.id,
+                                    nombre: record._fields[0].properties.nombre,
+                                    celular: record._fields[0].properties.celular,
+                                    correo: record._fields[0].properties.correo,
+                                    edad: record._fields[0].properties.edad,
+                                    estadoCivil: record._fields[0].properties.estadoCivil,
+                                    indice: cont
+                                });
+                                cont++;
+                            });
+                            res.render('adminPersona',{
+                                personas: array
+                            });
+                        })
+                        .catch(function(err){
+                            console.log(err);
+                        });
+                    session.close();
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
+            break;
+        case "2":
+            query = "MERGE (n:Persona {id:{a}}) SET n.nombre = {b}, n.celular = {c}, n.correo = {d}, n.edad = {e}, n.estadoCivil = {f} RETURN n;"
+            session
+                .run(query,{a:id, b:nombre, c:celular, d:correo, e:edad, f:estadoCivil})
+                .then(function(result){
+                    query = 'MATCH (n:Persona) RETURN n;';
+
+                        session
+                        .run(query)
+                        .then(function(result){
+                            var array = [];
+                            var cont = 0;
+                            result.records.forEach(function(record){
+                                array.push({
+                                    id: record._fields[0].properties.id,
+                                    nombre: record._fields[0].properties.nombre,
+                                    celular: record._fields[0].properties.celular,
+                                    correo: record._fields[0].properties.correo,
+                                    edad: record._fields[0].properties.edad,
+                                    estadoCivil: record._fields[0].properties.estadoCivil,
+                                    indice: cont
+                                });
+                                cont++;
+                            });
+                            res.render('adminPersona',{
+                                personas: array
+                            });
+                        })
+                        .catch(function(err){
+                            console.log(err);
+                        });
+                    session.close();
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
+            break;
+        case "3":
+            query = "MATCH (n:Persona {id: {a}}) DELETE n;"
+            session
+                .run(query,{a:id})
+                .then(function(result){
+                    query = 'MATCH (n:Persona) RETURN n;';
+
+                        session
+                        .run(query)
+                        .then(function(result){
+                            var array = [];
+                            var cont = 0;
+                            result.records.forEach(function(record){
+                                array.push({
+                                    id: record._fields[0].properties.id,
+                                    nombre: record._fields[0].properties.nombre,
+                                    celular: record._fields[0].properties.celular,
+                                    correo: record._fields[0].properties.correo,
+                                    edad: record._fields[0].properties.edad,
+                                    estadoCivil: record._fields[0].properties.estadoCivil,
+                                    indice: cont
+                                });
+                                cont++;
+                            });
+                            res.render('adminPersona',{
+                                personas: array
                             });
                         })
                         .catch(function(err){

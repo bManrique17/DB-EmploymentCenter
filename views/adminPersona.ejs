@@ -9,63 +9,73 @@
     <title>Centro de Empleo Jonny Loco</title>
   </head>
   <body>
-     <h1>Empresas</h1>
-     <p>En esta seccion podra agregar y eliminar empresas a la agencia, asi como
-        modificar los datos de cada una. Para modificar, seleccione la empresa
+     <h1>Personas</h1>
+     <p>En esta seccion podra agregar y eliminar personas a la agencia, asi como
+        modificar los datos de cada una. Para modificar, seleccione la persona
         deseada, altere un campo y presione modificar.</p>
     <table class="table">
       <thead>
         <tr>
           <th scope="col">Seleccione</th>
-          <th scope="col">RTN</th>
+          <th scope="col">ID</th>
           <th scope="col">Nombre</th>
-          <th scope="col">Director</th>
+          <th scope="col">Celular</th>
         </tr>
       </thead>
       <tbody>
           <script type="text/javascript">
-              var matrizEmpresas = new Array();
+              var matrizPersonas = new Array();
               function colocarValores(c){
-                  $("#a").val(matrizEmpresas[c][0]);
-                  $("#b").val(matrizEmpresas[c][1]);
-                  $("#c").val(matrizEmpresas[c][2]);
-                  $("#d").val(matrizEmpresas[c][3]);
+
+                  $("#a").val(matrizPersonas[c][0]);
+                  $("#b").val(matrizPersonas[c][1]);
+                  $("#c").val(matrizPersonas[c][2]);
+                  $("#d").val(matrizPersonas[c][3]);
+                  $("#e").val(matrizPersonas[c][4]);
+                  $("#f").val(matrizPersonas[c][5]);
+
               };
           </script>
-          <% empresas.forEach(function(empresa){ %>
+          <% personas.forEach(function(persona){ %>
              <tr>
                  <script type="text/javascript">
-                    matrizEmpresas.push(['<%= empresa.rtn %>','<%= empresa.nombre %>','<%= empresa.director %>','<%= empresa.direccion %>']);
+                    matrizPersonas.push(['<%= persona.id %>','<%= persona.nombre %>','<%= persona.celular %>','<%= persona.correo %>','<%= persona.edad %>','<%= persona.estadoCivil %>']);
                     cont++;
                  </script>
-                  <td><button type="button" id=<%= empresa.indice %> class='btn btn-danger' onclick="colocarValores(this.id)">Ver</button></td>
-                  <td><%= empresa.rtn %></td>
-                  <td><%= empresa.nombre %></td>
-                  <td><%= empresa.director %></td>
+                  <td><button type="button" id=<%= persona.indice %> class='btn btn-danger' onclick="colocarValores(this.id)">Ver</button></td>
+                  <td><%= persona.id %></td>
+                  <td><%= persona.nombre %></td>
+                  <td><%= persona.celular %></td>
             </tr>
           <% }) %>
       </tbody>
     </table>
-    <h2>Datos de la empresa seleccionada</h2>
-    <form class="" action="/crudEmpresa" method="post">
+    <h2>Datos personales de la persona seleccionada</h2>
+    <form class="" action="/crudPersona" method="post">
         <div class=input-group-prepend>
-    		<span class=input-group-text id=basic-addon1>RTN</span>
+    		<span class=input-group-text id=basic-addon1>ID</span>
     		<input type=text id="a" name="a" value= "" class=form-control aria-describedby=basic-addon1>
     	</div>
         <div class=input-group-prepend>
-    		<span class=input-group-text id=basic-addon1>Nombre de empresa</span>
+    		<span class=input-group-text id=basic-addon1>Nombre completo</span>
     		<input type=text id="b" name="b" value="" class=form-control aria-describedby=basic-addon1>
     	</div>
         <div class=input-group-prepend>
-    		<span class=input-group-text id=basic-addon1>Director</span>
+    		<span class=input-group-text id=basic-addon1>Celular</span>
     		<input type=text id="c" name="c" value="" class=form-control aria-describedby=basic-addon1>
     	</div>
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Direccion</span>
-            </div>
-            <textarea class="form-control" id="d" name="d" value="" aria-label="With textarea"></textarea>
-        </div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Correo</span>
+    		<input type=text id="d" name="d" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Edad</span>
+    		<input type=text id="e" name="e" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Estado Civil</span>
+    		<input type=text id="f" name="f" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
         <br>
 
         <section id="botones" class="main row">
