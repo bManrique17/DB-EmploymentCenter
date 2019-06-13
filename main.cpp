@@ -19,7 +19,7 @@ using namespace std;
 bool directa(int,int*,int,int);
 bool asociativaSecuencial(int,int*,int,int*,int);
 bool asociativaLRU(int,int*,int,vector <int>*,int);
-bool asociativaXconjuntosSecuencial(int,int*,int,int*,int,int);
+bool asociativaXconjuntosSecuencial(int,int*,int,vector <int>*,int,int);
 bool asociativaXconjuntosLRU(int,int*,int,vector <int>*,int,int);
 
 
@@ -127,7 +127,7 @@ int main(){
 								break;
 							case 3:
 								if(metodoDeLinea == 1){
-									if(asociativaXconjuntosSecuencial(k,&cache[0],numPalabrasXLinea,&siguienteLinea,tamanoConjunto,numLineas)){
+									if(asociativaXconjuntosSecuencial(k,&cache[0],numPalabrasXLinea,&implementacionLRU,tamanoConjunto,numLineas)){
 										aciertos++;
 									}else{
 										fallos++;
@@ -213,21 +213,19 @@ bool asociativaLRU(int memoria, int* cache, int numPalabrasXLinea, vector<int>* 
 	return false;
 }
 
-bool asociativaXconjuntosSecuencial(int memoria,int* cache,int numPalabrasXLinea, int* siguienteLinea, int tamanoConjunto, int numLineas){
+bool asociativaXconjuntosSecuencial(int memoria,int* cache,int numPalabrasXLinea, vector<int>* implementacionLRU, int tamanoConjunto, int numLineas){
 	int bloque = memoria/numPalabrasXLinea;
 	int conjunto = bloque%(numLineas/tamanoConjunto);
 	int primerValor = bloque*numPalabrasXLinea;
-
+	int temp = 0;
 	for(int i=conjunto*tamanoConjunto ; i<tamanoConjunto*(conjunto+1); i++){
 		if(primerValor == cache[i])
 			return true;
 	}
-
-	cache[(*(siguienteLinea))+conjunto*tamanoConjunto] = primerValor;
-	if(*(siguienteLinea) != tamanoConjunto-1)
-		*(siguienteLinea) = *(siguienteLinea)+1;
-	else
-		*(siguienteLinea) = 0;
+	temp = (*(implementacionLRU)).at(conjunto*tamanoConjunto);
+	cache[temp] = primerValor;
+	(*(implementacionLRU)).insert((*(implementacionLRU)).begin()+(conjunto+1)*tamanoConjunto,temp);
+	(*(implementacionLRU)).erase((*(implementacionLRU)).begin()+conjunto*tamanoConjunto);
 	return false;
 }
 
@@ -248,10 +246,10 @@ bool asociativaXconjuntosLRU(int memoria,int* cache,int numPalabrasXLinea, vecto
 			(*(implementacionLRU)).erase((*(implementacionLRU)).begin()+j);
 			return true;
 		}
-	}
+	}	
 	temp = (*(implementacionLRU)).at(conjunto*tamanoConjunto);
 	cache[temp] = primerValor;
 	(*(implementacionLRU)).insert((*(implementacionLRU)).begin()+(conjunto+1)*tamanoConjunto,temp);
-	(*(implementacionLRU)).erase((*(implementacionLRU)).begin()+temp);					
+	(*(implementacionLRU)).erase((*(implementacionLRU)).begin()+conjunto*tamanoConjunto);
 	return false;
 }

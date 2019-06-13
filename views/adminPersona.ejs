@@ -9,6 +9,9 @@
     <title>Centro de Empleo Jonny Loco</title>
   </head>
   <body>
+      <form class="" action="/inicio" method="post">
+            <button type="submit" class="btn btn-danger">Menu principal</button>
+      </form>
      <h1>Personas</h1>
      <p>En esta seccion podra agregar y eliminar personas a la agencia, asi como
         modificar los datos de cada una. Para modificar, seleccione la persona
@@ -25,17 +28,86 @@
       <tbody>
           <script type="text/javascript">
               var matrizPersonas = new Array();
+              var matrizPFamiliares = new Array();
+              var matrizPSanitarios = new Array();
+              var matrizPLegales   = new Array();
+              var matrizPAcademicos = new Array();
+              var matrizPLabPro = new Array();
+              var matrizPCondiciones = new Array();
               function colocarValores(c){
-
+                  //personales
                   $("#a").val(matrizPersonas[c][0]);
                   $("#b").val(matrizPersonas[c][1]);
                   $("#c").val(matrizPersonas[c][2]);
                   $("#d").val(matrizPersonas[c][3]);
                   $("#e").val(matrizPersonas[c][4]);
                   $("#f").val(matrizPersonas[c][5]);
-
+                  //familiares
+                  $("#g").val(matrizPFamiliares[c][0]);
+                  $("#h").val(matrizPFamiliares[c][1]);
+                  $("#i").val(matrizPFamiliares[c][2]);
+                  $("#j").val(matrizPFamiliares[c][3]);
+                  $("#k").val(matrizPFamiliares[c][4]);
+                  $("#l").val(matrizPFamiliares[c][5]);
+                  $("#m").val(matrizPFamiliares[c][6]);
+                  //sanitarios
+                  $("#n").val(matrizPSanitarios[c][0]);
+                  $("#o").val(matrizPSanitarios[c][1]);
+                  $("#p").val(matrizPSanitarios[c][2]);
+                  //legales
+                  $("#q").val(matrizPLegales[c][0]);
+                  $("#r").val(matrizPLegales[c][1]);
+                  //academicos
+                  $("#s").val(matrizPAcademicos[c][0]);
+                  $("#t").val(matrizPAcademicos[c][1]);
+                  $("#u").val(matrizPAcademicos[c][2]);
+                  $("#v").val(matrizPAcademicos[c][3]);
+                  //laborales y profesionales
+                  $("#w").val(matrizPLabPro[c][0]);
+                  $("#x").val(matrizPLabPro[c][1]);
+                  $("#y").val(matrizPLabPro[c][2]);
+                  $("#z").val(matrizPLabPro[c][3]);
+                  $("#aa").val(matrizPLabPro[c][4]);
+                  //condiciones de empleo
+                  $("#ab").val(matrizPCondiciones[c][0]);
+                  $("#ac").val(matrizPCondiciones[c][1]);
+                  $("#ad").val(matrizPCondiciones[c][2]);
               };
           </script>
+          <% familiares.forEach(function(familiar){ %>
+              <script type="text/javascript">
+                matrizPFamiliares.push(['<%= familiar.idPadre %>','<%= familiar.padre %>','<%= familiar.idMadre %>','<%= familiar.madre %>',
+                                      '<%= familiar.ccPadre %>','<%= familiar.ccMadre %>','<%= familiar.numHijos %>']);
+              </script>
+          <% }) %>
+          <% sanitarios.forEach(function(sanitario){ %>
+              <script type="text/javascript">
+                  matrizPSanitarios.push(['<%= sanitario.enfermedades %>','<%= sanitario.medicamentos %>','<%= sanitario.hospital %>']);
+              </script>
+          <% }) %>
+          <% legales.forEach(function(legal){ %>
+              <script type="text/javascript">
+                  matrizPLegales.push(['<%= legal.militar %>','<%= legal.carcel %>']);
+              </script>
+          <% }) %>
+          <% academicos.forEach(function(academico){ %>
+              <script type="text/javascript">
+                  matrizPAcademicos.push(['<%= academico.escuela %>','<%= academico.colegio %>',
+                                          '<%= academico.upreg %>','<%= academico.upost %>']);
+              </script>
+          <% }) %>
+          <% LabPros.forEach(function(LabPro){ %>
+              <script type="text/javascript">
+                  matrizPLabPro.push(['<%= LabPro.nombreEmpresa %>','<%= LabPro.ulSalario %>','<%= LabPro.profesion %>',
+                                          '<%= LabPro.aniosExp %>','<%= LabPro.puestos %>']);
+              </script>
+          <% }) %>
+          <% condiciones.forEach(function(condicion){ %>
+              <script type="text/javascript">
+                  matrizPCondiciones.push(['<%= condicion.posPuestos %>','<%= condicion.contrato %>','<%= condicion.salario %>']);
+              </script>
+          <% }) %>
+
           <% personas.forEach(function(persona){ %>
              <tr>
                  <script type="text/javascript">
@@ -50,25 +122,20 @@
           <% }) %>
       </tbody>
     </table>
-    <h2>Datos personales de la persona seleccionada</h2>
+
     <form class="" action="/crudPersona" method="post">
+        <h2>Datos personales</h2>
         <div class=input-group-prepend>
     		<span class=input-group-text id=basic-addon1>ID</span>
     		<input type=text id="a" name="a" value= "" class=form-control aria-describedby=basic-addon1>
-    	</div>
-        <div class=input-group-prepend>
     		<span class=input-group-text id=basic-addon1>Nombre completo</span>
     		<input type=text id="b" name="b" value="" class=form-control aria-describedby=basic-addon1>
     	</div>
         <div class=input-group-prepend>
     		<span class=input-group-text id=basic-addon1>Celular</span>
     		<input type=text id="c" name="c" value="" class=form-control aria-describedby=basic-addon1>
-    	</div>
-        <div class=input-group-prepend>
     		<span class=input-group-text id=basic-addon1>Correo</span>
     		<input type=text id="d" name="d" value="" class=form-control aria-describedby=basic-addon1>
-    	</div>
-        <div class=input-group-prepend>
     		<span class=input-group-text id=basic-addon1>Edad</span>
     		<input type=text id="e" name="e" value="" class=form-control aria-describedby=basic-addon1>
     	</div>
@@ -76,18 +143,106 @@
     		<span class=input-group-text id=basic-addon1>Estado Civil</span>
     		<input type=text id="f" name="f" value="" class=form-control aria-describedby=basic-addon1>
     	</div>
-        <br>
+        <h2>Datos familiares</h2>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>ID Padre</span>
+    		<input type=text id="g" name="g" value= "" class=form-control aria-describedby=basic-addon1>
+    		<span class=input-group-text id=basic-addon1>Nombre completo padre</span>
+    		<input type=text id="h" name="h" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>ID Madre</span>
+    		<input type=text id="i" name="i" value= "" class=form-control aria-describedby=basic-addon1>
+    		<span class=input-group-text id=basic-addon1>Nombre completo madre</span>
+    		<input type=text id="j" name="j" value="" class=form-control aria-describedby=basic-addon1>
 
-        <section id="botones" class="main row">
-            <div class="col-md-2">
+    	</div>
+        <div class=input-group-prepend>
+            <span class=input-group-text id=basic-addon1>Contacto del padre</span>
+            <input type=text id="k" name="k" value= "" class=form-control aria-describedby=basic-addon1>
+            <span class=input-group-text id=basic-addon1>Contacto de la madre</span>
+            <input type=text id="l" name="l" value="" class=form-control aria-describedby=basic-addon1>
+            <span class=input-group-text id=basic-addon1>Numero de hijos</span>
+            <input type=text id="m" name="m" value="" class=form-control aria-describedby=basic-addon1>
+        </div>
+        <h2>Datos sanitarios</h2>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Enfermedades</span>
+    		<input type=text id="n" name="n" value= "" class=form-control aria-describedby=basic-addon1>
+        </div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Medicamentos</span>
+    		<input type=text id="o" name="o" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>¿Ha sido hospitalizado [Si/No]?</span>
+    		<input type=text id="p" name="p" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <h2>Datos legales</h2>
+        <div class=input-group-prepend>
+            <span class=input-group-text id=basic-addon1>¿Ha prestado servicio militar [Si/No]?</span>
+            <input type=text id="q" name="q" value= "" class=form-control aria-describedby=basic-addon1>
+            <span class=input-group-text id=basic-addon1>¿Ha sido encarcelado [Si/No]?</span>
+            <input type=text id="r" name="r" value= "" class=form-control aria-describedby=basic-addon1>
+        </div>
+        <h2>Datos academicos</h2>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Escuela</span>
+    		<input type=text id="s" name="s" value= "" class=form-control aria-describedby=basic-addon1>
+        </div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Colegio</span>
+    		<input type=text id="t" name="t" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Universidad de Pregrado</span>
+    		<input type=text id="u" name="u" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Universidad de Postgrado</span>
+    		<input type=text id="v" name="v" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <h2>Datos laborales y profesionales</h2>
+        <div class=input-group-prepend>
+            <span class=input-group-text id=basic-addon1>Nombre de la ultima empresa donde trabajo</span>
+            <input type=text id="w" name="w" value= "" class=form-control aria-describedby=basic-addon1>
+        </div>
+        <div class=input-group-prepend>
+            <span class=input-group-text id=basic-addon1>Ultimo salario recibido</span>
+            <input type=text id="x" name="x" value="" class=form-control aria-describedby=basic-addon1>
+            <span class=input-group-text id=basic-addon1>Años de experiencia</span>
+            <input type=text id="y" name="y" value="" class=form-control aria-describedby=basic-addon1>
+        </div>
+        <div class=input-group-prepend>
+            <span class=input-group-text id=basic-addon1>Profesion</span>
+            <input type=text id="z" name="z" value="" class=form-control aria-describedby=basic-addon1>
+        </div>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Puestos desempeñados</span>
             </div>
-            <div class="col-md-2">
+            <textarea class="form-control" id="aa" name="aa" value="" aria-label="With textarea"></textarea>
+        </div>
+        <h2>Condiciones de empleo</h2>
+        <div class=input-group-prepend>
+            <span class=input-group-text id=basic-addon1>Posibles puestos esperados</span>
+            <input type=text id="ab" name="ab" value="" class=form-control aria-describedby=basic-addon1>
+        </div>
+        <div class=input-group-prepend>
+            <span class=input-group-text id=basic-addon1>Tipo de contrato esperado [Permanente/Por contrato]</span>
+            <input type=text id="ac" name="ac" value= "" class=form-control aria-describedby=basic-addon1>
+            <span class=input-group-text id=basic-addon1>Salario esperado</span>
+            <input type=text id="ad" name="ad" value= "" class=form-control aria-describedby=basic-addon1>
+        </div>
+        <br>
+        <section id="botones" class="main row">
+            <div class="col-md-4">
                 <td><button type="submit" id="1" class='btn btn-danger' onclick="senuelo(this.id)" >Crear</button></td>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <td><button type="submit" id="2" class='btn btn-danger' onclick="senuelo(this.id)">Modificar</button></td>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <td><button type="submit" id="3" class='btn btn-danger' onclick="senuelo(this.id)">Eliminar</button></td>
             </div>
         </section>

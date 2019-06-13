@@ -9,6 +9,9 @@
     <title>Centro de Empleo Jonny Loco</title>
   </head>
   <body>
+      <form class="" action="/inicio" method="post">
+            <button type="submit" class="btn btn-danger">Menu principal</button>
+      </form>
      <h1>Empresas</h1>
      <p>En esta seccion podra agregar y eliminar empresas a la agencia, asi como
         modificar los datos de cada una. Para modificar, seleccione la empresa
@@ -36,7 +39,6 @@
              <tr>
                  <script type="text/javascript">
                     matrizEmpresas.push(['<%= empresa.rtn %>','<%= empresa.nombre %>','<%= empresa.director %>','<%= empresa.direccion %>']);
-                    cont++;
                  </script>
                   <td><button type="button" id=<%= empresa.indice %> class='btn btn-danger' onclick="colocarValores(this.id)">Ver</button></td>
                   <td><%= empresa.rtn %></td>
