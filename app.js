@@ -27,6 +27,11 @@ app.post('/inicio', function(req, res){
     });
 });
 
+app.post('/adminEmpleo', function(req, res){
+    res.render('adminEmpleo',{
+    });
+});
+
 var query = 'MATCH (n:Empresa) RETURN n;';
 
 app.post('/adminEmpresa', function(req, res){
@@ -384,7 +389,7 @@ app.post('/crudPersona', function(req, res){
                     session.close();
                 });
             //sanitarios
-            query = "MERGE (n:dSanitario {id:{a}}) SET n.enfermedades={a},n.medicamentos={b},n.hospital={c};"
+            query = "MERGE (n:dSanitario {id:{z}}) SET n.enfermedades={a},n.medicamentos={b},n.hospital={c};"
             session
                 .run(query,{z:id, a:enfermedades, b:medicamentos, c:hospital})
                 .then(function(result){
@@ -424,49 +429,49 @@ app.post('/crudPersona', function(req, res){
         //personales
         query = "MERGE (n:Persona {id:{a}}) DELETE (n);"
         session
-            .run(query,{a:id, b:nombre, c:celular, d:correo, e:edad, f:estadoCivil})
+            .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
         //familiares
         query = "MERGE (n:dFamiliar {id:{a}}) DELETE (n);"
         session
-            .run(query,{z:id,a:idPadre, b:padre, c:idMadre, d:madre, e:ccPadre, f:ccMadre, g:numHijos})
+            .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
         //sanitarios
         query = "MERGE (n:dSanitario {id:{a}}) DELETE (n);"
         session
-            .run(query,{z:id, a:enfermedades, b:medicamentos, c:hospital})
+            .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
         //legales
         query = "MERGE (n:dLegal {id:{a}}) DELETE (n);"
         session
-            .run(query,{z:id,a:militar, b:carcel})
+            .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
         //academicos
         query = "MERGE (n:dAcademico {id:{a}}) DELETE (n);"
         session
-            .run(query,{z:id, a:escuela, b:colegio, c:upreg, d:upost})
+            .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
         //labpro
         query = "MERGE (n:dLabPro {id:{a}}) DELETE (n);"
         session
-            .run(query,{z:id, a:nombreEmpresa, b:ulSalario, c:profesion, d:aniosExp, e:puestos})
+            .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
         //condiciones
         query = "MERGE (n:dCondicion {id:{a}}) DELETE (n);"
         session
-            .run(query,{z:id, a:posPuestos, b:contrato, c:salario})
+            .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
