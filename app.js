@@ -55,16 +55,16 @@ app.post('/adminEmpresa', function(req, res){
         console.log(err);
     });
 });
-
+var arrayEmpleo = [];
 app.post('/adminEmpleo', function(req, res){
     query = 'MATCH (n:Empleo) RETURN n;';
     session
     .run(query)
     .then(function(result){
-        var arrayEmpl = [];
+        arrayEmpleo = [];
         var cont = 0;
         result.records.forEach(function(record){
-            arrayEmpl.push({
+            arrayEmpleo.push({
                 idEmpleo: record._fields[0].properties.idEmpleo,
                 idEmpresa: record._fields[0].properties.idEmpresa,
                 nombreEmpresa: record._fields[0].properties.nombreEmpresa,
@@ -83,8 +83,29 @@ app.post('/adminEmpleo', function(req, res){
             });
             cont++;
         });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+
+    query = "MATCH (n:Empresa) RETURN n;";
+    session
+    .run(query)
+    .then(function(result){
+        var arrayEmp = [];
+        var contw = 0;
+        result.records.forEach(function(record){
+            arrayEmp.push({
+                rtn: record._fields[0].properties.rtn,
+                nombre: record._fields[0].properties.nombre,
+                indice: contw
+            });
+            contw++;
+        });
         res.render('adminEmpleo',{
-            empleos: arrayEmpl
+            empleos: arrayEmpleo,
+            empresas: arrayEmp
         });
         session.close();
     })
@@ -252,7 +273,7 @@ app.post('/crudEmpresa', function(req, res){
     var opcion = req.body.opcion;
     switch (opcion) {
         case "1":
-            query = "CREATE(n:Empresa {direccion:{a},nombre:{b},rtn:{c},director:{d}}) RETURN n.nombre;"
+            query = "CREATE(n:Empresa {direccion:{a},nombre:{b},rtn:{c},director:{d}});"
             session
                 .run(query,{a:direccion, b:nombre, c:rtn, d:director})
                 .then(function(result){
@@ -263,7 +284,7 @@ app.post('/crudEmpresa', function(req, res){
                 });
             break;
         case "2":
-            query = "MERGE (n:Empresa {rtn:{a}}) SET n.nombre = {b}, n.director = {c}, n.direccion = {d} RETURN n;"
+            query = "MERGE (n:Empresa {rtn:{a}}) SET n.nombre = {b}, n.director = {c}, n.direccion = {d};"
             session
                 .run(query,{a:rtn, b:nombre, c:director, d:direccion})
                 .then(function(result){
@@ -364,15 +385,15 @@ app.post('/crudEmpleo', function(req, res){
                 });
             break;
     }
-
+    var arrayEmpll = [];
     query = 'MATCH (n:Empleo) RETURN n;';
     session
     .run(query)
     .then(function(result){
-        var arrayEmpl = [];
+        arrayEmpll = [];
         var cont = 0;
         result.records.forEach(function(record){
-            arrayEmpl.push({
+            arrayEmpll.push({
                 idEmpleo: record._fields[0].properties.idEmpleo,
                 idEmpresa: record._fields[0].properties.idEmpresa,
                 nombreEmpresa: record._fields[0].properties.nombreEmpresa,
@@ -391,8 +412,29 @@ app.post('/crudEmpleo', function(req, res){
             });
             cont++;
         });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+
+    query = "MATCH (n:Empresa) RETURN n;";
+    session
+    .run(query)
+    .then(function(result){
+        var arrayEmp = [];
+        var contw = 0;
+        result.records.forEach(function(record){
+            arrayEmp.push({
+                rtn: record._fields[0].properties.rtn,
+                nombre: record._fields[0].properties.nombre,
+                indice: contw
+            });
+            contw++;
+        });
         res.render('adminEmpleo',{
-            empleos: arrayEmpl
+            empleos: arrayEmpll,
+            empresas: arrayEmp
         });
         session.close();
     })
@@ -459,7 +501,7 @@ app.post('/crudPersona', function(req, res){
                     session.close();
                 });
             //sanitarios
-            query = "CREATE(n:dSanitario {id:{a},enfermedades:{a},medicamentos:{b},hospital:{c}}) RETURN n.nombre;"
+            query = "CREATE(n:dSanitario {id:{z},enfermedades:{a},medicamentos:{b},hospital:{c}}) RETURN n.nombre;"
             session
                 .run(query,{z:id, a:enfermedades, b:medicamentos, c:hospital})
                 .then(function(result){
@@ -747,6 +789,17 @@ app.post('/crudPersona', function(req, res){
         console.log(err);
     });
 
+});
+
+//LOGIN
+app.post('/loginEmpresa', function(req, res){
+    res.render('loginEmpresa',{
+    });
+});
+//LOGIN
+app.post('/loginPersona', function(req, res){
+    res.render('loginPersona',{
+    });
 });
 
 app.listen(3000);

@@ -29,6 +29,7 @@
       <tbody>
           <script type="text/javascript">
               var matrizEmpleos = new Array();
+              var matrizEmpresas = new Array();
               function colocarValores(c){
                   $("#a").val(matrizEmpleos[c][0]);
                   $("#b").val(matrizEmpleos[c][3]);
@@ -42,8 +43,15 @@
                   $("#j").val(matrizEmpleos[c][11]);
                   $("#k").val(matrizEmpleos[c][12]);
                   $("#l").val(matrizEmpleos[c][13]);
+                  var opciones = document.getElementById('comboBox').options;
+                  for(var i=0 ; i<opciones.length ; i++){
+                      if(matrizEmpleos[c][2] == opciones[i].text){
+                          opciones[i].selected = true;
+                      }
+                  }
               };
           </script>
+
           <% empleos.forEach(function(empleo){ %>
              <tr>
                  <script type="text/javascript">
@@ -68,6 +76,22 @@
     		<span class=input-group-text id=basic-addon1>ID</span>
     		<input type=text id="a" name="a" value= "" class=form-control aria-describedby=basic-addon1>
     	</div>
+        <section class="main row">
+            <div class="col-sm-1">
+                    <span class=input-group-text id=basic-addon1>Empresa</span>
+            </div>
+            <div class="col-sm-6">
+                <select id="comboBox" class="form-control">
+                    <option id= "-1" value="" > Seleccione </option>
+                    <% empresas.forEach(function(empresa){ %>
+                        <script type="text/javascript">
+                            matrizEmpresas.push(['<%= empresa.rtn %>','<%= empresa.nombre %>']);
+                        </script>
+                        <option id= <%= empresa.indice%> value="" onclick="colocarEmpresa(this.id)"> <%= empresa.nombre %> </option>
+                    <% }) %>
+                </select>
+            </div>
+        </section>
         <div class=input-group-prepend>
     		<span class=input-group-text id=basic-addon1>Puesto</span>
     		<input type=text id="b" name="b" value="" class=form-control aria-describedby=basic-addon1>
@@ -129,10 +153,22 @@
         </section>
         <input type=text id="opcion" style="display:none" name="opcion" value="" class=form-control aria-describedby=basic-addon1>
         <input type=text id="idEmp" style="display:none" name="idEmp" value="idDEEMPER" class=form-control aria-describedby=basic-addon1>
-        <input type=text id="nomEmp" style="display:none" name="nomEmp" value="NOmbreCACBLE" class=form-control aria-describedby=basic-addon1>        
+        <input type=text id="nomEmp" style="display:none" name="nomEmp" value="NOmbreCACBLE" class=form-control aria-describedby=basic-addon1>
         <script type="text/javascript">
             function senuelo(c){
                 $("#opcion").val(c);
+                var opciones = document.getElementById('comboBox').options;
+                for(var i=0 ; i<opciones.length ; i++){
+                    if(opciones[i].selected == true){
+                        $("#nomEmp").val(matrizEmpresas[i-1][1]);
+                        $("#idEmp").val(matrizEmpresas[i-1][0]);
+                        break;
+                    }
+                }
+            };
+            function colocarEmpresa(c){
+                $("#nomEmp").val(matrizEmpresas[c][1]);
+                $("#idEmp").val(matrizEmpresas[c][0]);
             };
         </script>
     </form>

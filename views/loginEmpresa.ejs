@@ -8,27 +8,15 @@
 
     <title>Centro de Empleo Jonny Loco</title>
   </head>
-  <body>
-    <h1>Pagina principal</h1>
-    <br>
-    <br>
-    <form class="" action="/adminEmpresa" method="post">
-        <button type="submit" name="button" value=1 class="btn btn-secondary btn-lg btn-block">Administrar Empresas</button>
-    </form>
-    <form class="" action="/adminPersona" method="post">
-        <button type="submit" name="button" value=2 class="btn btn-secondary btn-lg btn-block">Administrar Personas</button>
-    </form>
-    <form class="" action="/adminEmpleo" method="post">
-        <button type="submit" name="button" value=3 class="btn btn-secondary btn-lg btn-block">Administrar Empleos</button>
-    </form>
-    <form class="" action="/loginEmpresa" method="post">
-        <button type="submit" name="button" value=4 class="btn btn-secondary btn-lg btn-block">Ingresar como Empresa</button>
-    </form>
-    <form class="" action="/loginPersona" method="post">
-        <button type="submit" name="button" value=5 class="btn btn-secondary btn-lg btn-block">Ingresar como Solicitante</button>
-    </form>
-
-
+  <body id="body">
+     <script type="text/javascript">
+         var rtn = prompt("Ingrese el RTN de su empresa: ");
+         if(rtn == null){
+             window.location = "http://localhost:3000/";
+         }else{
+             alert("Bienvenido "+rtn);
+         }
+     </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
