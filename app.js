@@ -27,11 +27,6 @@ app.post('/inicio', function(req, res){
     });
 });
 
-app.post('/adminEmpleo', function(req, res){
-    res.render('adminEmpleo',{
-    });
-});
-
 var query = 'MATCH (n:Empresa) RETURN n;';
 
 app.post('/adminEmpresa', function(req, res){
@@ -53,6 +48,43 @@ app.post('/adminEmpresa', function(req, res){
         });
         res.render('adminEmpresa',{
             empresas: arrayEmp
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+});
+
+app.post('/adminEmpleo', function(req, res){
+    query = 'MATCH (n:Empleo) RETURN n;';
+    session
+    .run(query)
+    .then(function(result){
+        var arrayEmpl = [];
+        var cont = 0;
+        result.records.forEach(function(record){
+            arrayEmpl.push({
+                idEmpleo: record._fields[0].properties.idEmpleo,
+                idEmpresa: record._fields[0].properties.idEmpresa,
+                nombreEmpresa: record._fields[0].properties.nombreEmpresa,
+                puesto: record._fields[0].properties.puesto,
+                numPlazas: record._fields[0].properties.numPlazas,
+                salario: record._fields[0].properties.salario,
+                numHijos: record._fields[0].properties.numHijos,
+                consMed: record._fields[0].properties.consMed,
+                hospital: record._fields[0].properties.hospital,
+                militar: record._fields[0].properties.militar,
+                carcel: record._fields[0].properties.carcel,
+                aniosExp: record._fields[0].properties.aniosExp,
+                profesion: record._fields[0].properties.profesion,
+                contrato: record._fields[0].properties.contrato,
+                indice: cont
+            });
+            cont++;
+        });
+        res.render('adminEmpleo',{
+            empleos: arrayEmpl
         });
         session.close();
     })
@@ -279,6 +311,96 @@ app.post('/crudEmpresa', function(req, res){
     });
 
 });
+
+app.post('/crudEmpleo', function(req, res){
+    var query = "";
+    var opcion = req.body.opcion;
+    var idEmpleo = req.body.a;
+    var idEmpresa = req.body.idEmp;
+    var nombreEmpresa = req.body.nomEmp;
+    var puesto= req.body.b;
+    var numPlazas = req.body.c;
+    var salario = req.body.d;
+    var numHijos = req.body.e;
+    var consMed = req.body.f;
+    var hospital = req.body.g;
+    var militar = req.body.h;
+    var carcel = req.body.i;
+    var aniosExp = req.body.j;
+    var profesion = req.body.k;
+    var contrato = req.body.l;
+    switch (opcion) {
+        case "1":
+            query = "CREATE(n:Empleo {idEmpleo:{a},idEmpresa:{idEmp},nombreEmpresa:{nomEmp},puesto:{b},numPlazas:{c},salario:{d},numHijos:{e},consMed:{f},hospital:{g},militar:{h},carcel:{i},aniosExp:{j},profesion:{k},contrato:{l}});";
+            session
+                .run(query,{a:idEmpleo, idEmp:idEmpresa, nomEmp:nombreEmpresa, b:puesto,c:numPlazas, d:salario, e:numHijos, f:consMed,g:hospital, h:militar, i:carcel, j:aniosExp,k:profesion, l:contrato})
+                .then(function(result){
+                    session.close();
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
+            break;
+        case "2":
+            query = "MERGE (n:Empleo {idEmpleo:{a}}) SET n.idEmpresa={idEmp},n.nombreEmpresa={nomEmp},n.puesto={b},n.numPlazas={c},n.salario={d},n.numHijos={e},n.consMed={f},n.hospital={g},n.militar={h},n.carcel={i},n.aniosExp={j},n.profesion={k},n.contrato={l};";
+            session
+                .run(query,{a:idEmpleo, idEmp:idEmpresa, nomEmp:nombreEmpresa, b:puesto,c:numPlazas, d:salario, e:numHijos, f:consMed,g:hospital, h:militar, i:carcel, j:aniosExp,k:profesion, l:contrato})
+                .then(function(result){
+                    session.close();
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
+            break;
+        case "3":
+            query = "MATCH (n:Empleo {idEmpleo:{a}}) DELETE n;"
+            session
+                .run(query,{a:idEmpleo})
+                .then(function(result){
+                    session.close();
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
+            break;
+    }
+
+    query = 'MATCH (n:Empleo) RETURN n;';
+    session
+    .run(query)
+    .then(function(result){
+        var arrayEmpl = [];
+        var cont = 0;
+        result.records.forEach(function(record){
+            arrayEmpl.push({
+                idEmpleo: record._fields[0].properties.idEmpleo,
+                idEmpresa: record._fields[0].properties.idEmpresa,
+                nombreEmpresa: record._fields[0].properties.nombreEmpresa,
+                puesto: record._fields[0].properties.puesto,
+                numPlazas: record._fields[0].properties.numPlazas,
+                salario: record._fields[0].properties.salario,
+                numHijos: record._fields[0].properties.numHijos,
+                consMed: record._fields[0].properties.consMed,
+                hospital: record._fields[0].properties.hospital,
+                militar: record._fields[0].properties.militar,
+                carcel: record._fields[0].properties.carcel,
+                aniosExp: record._fields[0].properties.aniosExp,
+                profesion: record._fields[0].properties.profesion,
+                contrato: record._fields[0].properties.contrato,
+                indice: cont
+            });
+            cont++;
+        });
+        res.render('adminEmpleo',{
+            empleos: arrayEmpl
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+});
+
 
 app.post('/crudPersona', function(req, res){
     var query = "";

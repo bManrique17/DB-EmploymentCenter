@@ -1,0 +1,145 @@
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Centro de Empleo Jonny Loco</title>
+  </head>
+  <body>
+      <form class="" action="/inicio" method="post">
+            <button type="submit" class="btn btn-danger">Menu principal</button>
+      </form>
+     <h1>Empleos</h1>
+     <p>En esta seccion podra agregar y eliminar empleos de un determinada empresa, asi como
+        modificar los datos de cada uno. Para modificar, seleccione el empleo
+        deseado, altere un campo y presione modificar.</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Seleccione</th>
+          <th scope="col">Empresa</th>
+          <th scope="col">Puesto</th>
+          <th scope="col">Salario</th>
+          <th scope="col">Plazas</th>
+        </tr>
+      </thead>
+      <tbody>
+          <script type="text/javascript">
+              var matrizEmpleos = new Array();
+              function colocarValores(c){
+                  $("#a").val(matrizEmpleos[c][0]);
+                  $("#b").val(matrizEmpleos[c][3]);
+                  $("#c").val(matrizEmpleos[c][4]);
+                  $("#d").val(matrizEmpleos[c][5]);
+                  $("#e").val(matrizEmpleos[c][6]);
+                  $("#f").val(matrizEmpleos[c][7]);
+                  $("#g").val(matrizEmpleos[c][8]);
+                  $("#h").val(matrizEmpleos[c][9]);
+                  $("#i").val(matrizEmpleos[c][10]);
+                  $("#j").val(matrizEmpleos[c][11]);
+                  $("#k").val(matrizEmpleos[c][12]);
+                  $("#l").val(matrizEmpleos[c][13]);
+              };
+          </script>
+          <% empleos.forEach(function(empleo){ %>
+             <tr>
+                 <script type="text/javascript">
+                    matrizEmpleos.push(['<%= empleo.idEmpleo %>','<%= empleo.idEmpresa %>','<%= empleo.nombreEmpresa %>','<%= empleo.puesto %>',
+                            '<%= empleo.numPlazas %>','<%= empleo.salario %>','<%= empleo.numHijos %>','<%= empleo.consMed %>',
+                            '<%= empleo.hospital %>','<%= empleo.militar %>','<%= empleo.carcel %>','<%= empleo.aniosExp %>',
+                            '<%= empleo.profesion %>','<%= empleo.contrato %>']);
+                 </script>
+                  <td><button type="button" id=<%= empleo.indice %> class='btn btn-danger' onclick="colocarValores(this.id)">Ver</button></td>
+                  <td><%= empleo.nombreEmpresa %></td>
+                  <td><%= empleo.puesto %></td>
+                  <td><%= empleo.salario %></td>
+                  <td><%= empleo.numPlazas %></td>
+            </tr>
+          <% }) %>
+      </tbody>
+    </table>
+    <h2>Datos del empleo seleccionado</h2>
+
+    <form class="" action="/crudEmpleo" method="post">
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>ID</span>
+    		<input type=text id="a" name="a" value= "" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Puesto</span>
+    		<input type=text id="b" name="b" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Plazas</span>
+    		<input type=text id="c" name="c" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Salario</span>
+    		<input type=text id="d" name="d" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Numero de hijos</span>
+    		<input type=text id="e" name="e" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Consumero de medicamentos [Si/No]</span>
+    		<input type=text id="f" name="f" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>¿Ha sido hospitalizado? [Si/No]</span>
+    		<input type=text id="g" name="g" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>¿Ha prestado servicio militar [Si/No]?</span>
+    		<input type=text id="h" name="h" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>¿Ha estado en la carcel [Si/No]?</span>
+    		<input type=text id="i" name="i" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Años de experiencia</span>
+    		<input type=text id="j" name="j" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Profesion</span>
+    		<input type=text id="k" name="k" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <div class=input-group-prepend>
+    		<span class=input-group-text id=basic-addon1>Tipo de contrato [Permanente/Por contrato]</span>
+    		<input type=text id="l" name="l" value="" class=form-control aria-describedby=basic-addon1>
+    	</div>
+        <br>
+
+        <section id="botones" class="main row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
+                <td><button type="submit" id="1" class='btn btn-danger' onclick="senuelo(this.id)" >Crear</button></td>
+            </div>
+            <div class="col-md-2">
+                <td><button type="submit" id="2" class='btn btn-danger' onclick="senuelo(this.id)">Modificar</button></td>
+            </div>
+            <div class="col-md-2">
+                <td><button type="submit" id="3" class='btn btn-danger' onclick="senuelo(this.id)">Eliminar</button></td>
+            </div>
+        </section>
+        <input type=text id="opcion" style="display:none" name="opcion" value="" class=form-control aria-describedby=basic-addon1>
+        <input type=text id="idEmp" style="display:none" name="idEmp" value="idDEEMPER" class=form-control aria-describedby=basic-addon1>
+        <input type=text id="nomEmp" style="display:none" name="nomEmp" value="NOmbreCACBLE" class=form-control aria-describedby=basic-addon1>        
+        <script type="text/javascript">
+            function senuelo(c){
+                $("#opcion").val(c);
+            };
+        </script>
+    </form>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
