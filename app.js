@@ -26,18 +26,31 @@ app.post('/inicio', function(req, res){
     res.render('index',{
     });
 });
+//variables
+var query;
+var arrayEmpresa;
+var cont;
+var arrayEmpleo;
+var array;
+var arrayFamiliares;
+var arraySanitarios;
+var arrayLegales;
+var arrayAcademicos;
+var arrayLabPro;
+var arrayCondiciones;
+var arrayPuestos;
 
-var query = 'MATCH (n:Empresa) RETURN n;';
+query = 'MATCH (n:Empresa) RETURN n;';
 
 app.post('/adminEmpresa', function(req, res){
     query = 'MATCH (n:Empresa) RETURN n;';
     session
     .run(query)
     .then(function(result){
-        var arrayEmp = [];
-        var cont = 0;
+        arrayEmpresa = [];
+        cont = 0;
         result.records.forEach(function(record){
-            arrayEmp.push({
+            arrayEmpresa.push({
                 rtn: record._fields[0].properties.rtn,
                 nombre: record._fields[0].properties.nombre,
                 director: record._fields[0].properties.director,
@@ -47,7 +60,7 @@ app.post('/adminEmpresa', function(req, res){
             cont++;
         });
         res.render('adminEmpresa',{
-            empresas: arrayEmp
+            empresas: arrayEmpresa
         });
         session.close();
     })
@@ -55,14 +68,14 @@ app.post('/adminEmpresa', function(req, res){
         console.log(err);
     });
 });
-var arrayEmpleo = [];
+
 app.post('/adminEmpleo', function(req, res){
     query = 'MATCH (n:Empleo) RETURN n;';
     session
     .run(query)
     .then(function(result){
         arrayEmpleo = [];
-        var cont = 0;
+        cont = 0;
         result.records.forEach(function(record){
             arrayEmpleo.push({
                 idEmpleo: record._fields[0].properties.idEmpleo,
@@ -93,19 +106,19 @@ app.post('/adminEmpleo', function(req, res){
     session
     .run(query)
     .then(function(result){
-        var arrayEmp = [];
-        var contw = 0;
+        arrayEmpresa = [];
+        cont = 0;
         result.records.forEach(function(record){
-            arrayEmp.push({
+            arrayEmpresa.push({
                 rtn: record._fields[0].properties.rtn,
                 nombre: record._fields[0].properties.nombre,
-                indice: contw
+                indice: cont
             });
-            contw++;
+            cont++;
         });
         res.render('adminEmpleo',{
             empleos: arrayEmpleo,
-            empresas: arrayEmp
+            empresas: arrayEmpresa
         });
         session.close();
     })
@@ -115,18 +128,13 @@ app.post('/adminEmpleo', function(req, res){
 });
 
 app.post('/adminPersona', function(req, res){
-    var array = [];
-    var arrayFamiliares = [];
-    var arraySanitarios = [];
-    var arrayLegales = [];
-    var arrayAcademicos = [];
-    var arrayLabPro = [];
-    var arrayCondiciones = [];
-    var cont = 0;
+
     query = 'MATCH (n:Persona) RETURN n;';
     session
     .run(query)
     .then(function(result){
+        array = [];
+        cont = 0;
         result.records.forEach(function(record){
             array.push({
                 id: record._fields[0].properties.id,
@@ -149,6 +157,7 @@ app.post('/adminPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
+        arrayFamiliares = [];
         result.records.forEach(function(record){
             arrayFamiliares.push({
                 idPadre: record._fields[0].properties.idPadre,
@@ -170,6 +179,7 @@ app.post('/adminPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
+        arraySanitarios = [];
         result.records.forEach(function(record){
             arraySanitarios.push({
                 enfermedades: record._fields[0].properties.enfermedades,
@@ -187,6 +197,7 @@ app.post('/adminPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
+        arrayLegales = [];
         result.records.forEach(function(record){
             arrayLegales.push({
                 militar: record._fields[0].properties.militar,
@@ -203,6 +214,7 @@ app.post('/adminPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
+        arrayAcademicos = [];
         result.records.forEach(function(record){
             arrayAcademicos.push({
                 escuela: record._fields[0].properties.escuela,
@@ -221,6 +233,7 @@ app.post('/adminPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
+        arrayLabPro = [];
         result.records.forEach(function(record){
             arrayLabPro.push({
                 nombreEmpresa: record._fields[0].properties.nombreEmpresa,
@@ -240,6 +253,7 @@ app.post('/adminPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
+        arrayCondiciones = [];
         result.records.forEach(function(record){
             arrayCondiciones.push({
                 posPuestos: record._fields[0].properties.posPuestos,
@@ -265,7 +279,6 @@ app.post('/adminPersona', function(req, res){
 });
 
 app.post('/crudEmpresa', function(req, res){
-    var query = "";
     var rtn = req.body.a;
     var nombre = req.body.b;
     var director = req.body.c;
@@ -284,9 +297,18 @@ app.post('/crudEmpresa', function(req, res){
                 });
             break;
         case "2":
-            query = "MERGE (n:Empresa {rtn:{a}}) SET n.nombre = {b}, n.director = {c}, n.direccion = {d};"
+            query = "MATCH (n:Empresa {rtn:{a}}) SET n.nombre = {b}, n.director = {c}, n.direccion = {d};"
             session
                 .run(query,{a:rtn, b:nombre, c:director, d:direccion})
+                .then(function(result){
+                    session.close();
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
+            query = "MATCH (n:Empleo {idEmpresa:{a}}) SET n.nombreEmpresa = {b};"
+            session
+                .run(query,{a:rtn, b:nombre})
                 .then(function(result){
                     session.close();
                 })
@@ -304,16 +326,25 @@ app.post('/crudEmpresa', function(req, res){
                 .catch(function(err){
                     console.log(err);
                 });
+            query = "MATCH (n:Empleo {idEmpresa: {a}}) DELETE n;"
+            session
+                .run(query,{a:rtn})
+                .then(function(result){
+                    session.close();
+                })
+                .catch(function(err){
+                    console.log(err);
+                });
             break;
     }
     query = 'MATCH (n:Empresa) RETURN n;';
     session
     .run(query)
     .then(function(result){
-        var arrayEmp = [];
-        var cont = 0;
+        arrayEmpresa = [];
+        cont = 0;
         result.records.forEach(function(record){
-            arrayEmp.push({
+            arrayEmpresa.push({
                 rtn: record._fields[0].properties.rtn,
                 nombre: record._fields[0].properties.nombre,
                 director: record._fields[0].properties.director,
@@ -323,7 +354,7 @@ app.post('/crudEmpresa', function(req, res){
             cont++;
         });
         res.render('adminEmpresa',{
-            empresas: arrayEmp
+            empresas: arrayEmpresa
         });
         session.close();
     })
@@ -334,7 +365,6 @@ app.post('/crudEmpresa', function(req, res){
 });
 
 app.post('/crudEmpleo', function(req, res){
-    var query = "";
     var opcion = req.body.opcion;
     var idEmpleo = req.body.a;
     var idEmpresa = req.body.idEmp;
@@ -363,7 +393,7 @@ app.post('/crudEmpleo', function(req, res){
                 });
             break;
         case "2":
-            query = "MERGE (n:Empleo {idEmpleo:{a}}) SET n.idEmpresa={idEmp},n.nombreEmpresa={nomEmp},n.puesto={b},n.numPlazas={c},n.salario={d},n.numHijos={e},n.consMed={f},n.hospital={g},n.militar={h},n.carcel={i},n.aniosExp={j},n.profesion={k},n.contrato={l};";
+            query = "MATCH (n:Empleo {idEmpleo:{a}}) SET n.idEmpresa={idEmp},n.nombreEmpresa={nomEmp},n.puesto={b},n.numPlazas={c},n.salario={d},n.numHijos={e},n.consMed={f},n.hospital={g},n.militar={h},n.carcel={i},n.aniosExp={j},n.profesion={k},n.contrato={l};";
             session
                 .run(query,{a:idEmpleo, idEmp:idEmpresa, nomEmp:nombreEmpresa, b:puesto,c:numPlazas, d:salario, e:numHijos, f:consMed,g:hospital, h:militar, i:carcel, j:aniosExp,k:profesion, l:contrato})
                 .then(function(result){
@@ -374,7 +404,7 @@ app.post('/crudEmpleo', function(req, res){
                 });
             break;
         case "3":
-            query = "MATCH (n:Empleo {idEmpleo:{a}}) DELETE n;"
+            query = "MATCH (n:Empleo {idEmpleo:{a}}) OPTIONAL MATCH (n)-[r]-() DELETE n,r;"
             session
                 .run(query,{a:idEmpleo})
                 .then(function(result){
@@ -385,15 +415,14 @@ app.post('/crudEmpleo', function(req, res){
                 });
             break;
     }
-    var arrayEmpll = [];
     query = 'MATCH (n:Empleo) RETURN n;';
     session
     .run(query)
     .then(function(result){
-        arrayEmpll = [];
-        var cont = 0;
+        arrayEmpleo = [];
+        cont = 0;
         result.records.forEach(function(record){
-            arrayEmpll.push({
+            arrayEmpleo.push({
                 idEmpleo: record._fields[0].properties.idEmpleo,
                 idEmpresa: record._fields[0].properties.idEmpresa,
                 nombreEmpresa: record._fields[0].properties.nombreEmpresa,
@@ -422,19 +451,19 @@ app.post('/crudEmpleo', function(req, res){
     session
     .run(query)
     .then(function(result){
-        var arrayEmp = [];
-        var contw = 0;
+        arrayEmpresa = [];
+        cont = 0;
         result.records.forEach(function(record){
-            arrayEmp.push({
+            arrayEmpresa.push({
                 rtn: record._fields[0].properties.rtn,
                 nombre: record._fields[0].properties.nombre,
-                indice: contw
+                indice: cont
             });
-            contw++;
+            cont++;
         });
         res.render('adminEmpleo',{
-            empleos: arrayEmpll,
-            empresas: arrayEmp
+            empleos: arrayEmpleo,
+            empresas: arrayEmpresa
         });
         session.close();
     })
@@ -445,7 +474,6 @@ app.post('/crudEmpleo', function(req, res){
 
 
 app.post('/crudPersona', function(req, res){
-    var query = "";
     var opcion = req.body.opcion;
     //personales
     var id = req.body.a;
@@ -537,51 +565,51 @@ app.post('/crudPersona', function(req, res){
                 });
             break;
         case "2":
-            //query = "MERGE (n:Persona {id:{a}}) SET n.nombre = {b}, n.celular = {c}, n.correo = {d}, n.edad = {e}, n.estadoCivil = {f} RETURN n;"
+            //query = "MATCH (n:Persona {id:{a}}) SET n.nombre = {b}, n.celular = {c}, n.correo = {d}, n.edad = {e}, n.estadoCivil = {f} RETURN n;"
             //personales
-            query = "MERGE (n:Persona {id:{a}}) SET n.nombre = {b}, n.celular = {c}, n.correo = {d}, n.edad = {e}, n.estadoCivil = {f};"
+            query = "MATCH (n:Persona {id:{a}}) SET n.nombre = {b}, n.celular = {c}, n.correo = {d}, n.edad = {e}, n.estadoCivil = {f};"
             session
                 .run(query,{a:id, b:nombre, c:celular, d:correo, e:edad, f:estadoCivil})
                 .then(function(result){
                     session.close();
                 });
             //familiares
-            query = "MERGE (n:dFamiliar {id:{z}}) SET n.idPadre={a},n.padre={b},n.idMadre={c},n.madre={d},n.ccPadre={e},n.ccMadre={f},n.numHijos={g};"
+            query = "MATCH (n:dFamiliar {id:{z}}) SET n.idPadre={a},n.padre={b},n.idMadre={c},n.madre={d},n.ccPadre={e},n.ccMadre={f},n.numHijos={g};"
             session
                 .run(query,{z:id,a:idPadre, b:padre, c:idMadre, d:madre, e:ccPadre, f:ccMadre, g:numHijos})
                 .then(function(result){
                     session.close();
                 });
             //sanitarios
-            query = "MERGE (n:dSanitario {id:{z}}) SET n.enfermedades={a},n.medicamentos={b},n.hospital={c};"
+            query = "MATCH (n:dSanitario {id:{z}}) SET n.enfermedades={a},n.medicamentos={b},n.hospital={c};"
             session
                 .run(query,{z:id, a:enfermedades, b:medicamentos, c:hospital})
                 .then(function(result){
                     session.close();
                 });
             //legales
-            query = "MERGE (n:dLegal {id:{z}}) SET n.militar={a},n.carcel={b};"
+            query = "MATCH (n:dLegal {id:{z}}) SET n.militar={a},n.carcel={b};"
             session
                 .run(query,{z:id,a:militar, b:carcel})
                 .then(function(result){
                     session.close();
                 });
             //academicos
-            query = "MERGE (n:dAcademico {id:{z}}) SET n.escuela={a},n.colegio={b},n.upreg={c},n.upost={d};"
+            query = "MATCH (n:dAcademico {id:{z}}) SET n.escuela={a},n.colegio={b},n.upreg={c},n.upost={d};"
             session
                 .run(query,{z:id, a:escuela, b:colegio, c:upreg, d:upost})
                 .then(function(result){
                     session.close();
                 });
             //labpro
-            query = "MERGE (n:dLabPro {id:{z}}) SET n.nombreEmpresa={a},n.ulSalario={b},n.profesion={c},n.aniosExp={d},n.puestos={e};"
+            query = "MATCH (n:dLabPro {id:{z}}) SET n.nombreEmpresa={a},n.ulSalario={b},n.profesion={c},n.aniosExp={d},n.puestos={e};"
             session
                 .run(query,{z:id, a:nombreEmpresa, b:ulSalario, c:profesion, d:aniosExp, e:puestos})
                 .then(function(result){
                     session.close();
                 });
             //condiciones
-            query = "MERGE (n:dCondicion {id:{z}}) SET n.posPuestos={a},n.contrato={b},n.salario={c};"
+            query = "MATCH (n:dCondicion {id:{z}}) SET n.posPuestos={a},n.contrato={b},n.salario={c};"
             session
                 .run(query,{z:id, a:posPuestos, b:contrato, c:salario})
                 .then(function(result){
@@ -589,51 +617,51 @@ app.post('/crudPersona', function(req, res){
                 });
             break;
         case "3":
-        //query = "MERGE (n:Persona {id:{a}}) SET n.nombre = {b}, n.celular = {c}, n.correo = {d}, n.edad = {e}, n.estadoCivil = {f} RETURN n;"
+        //query = "MATCH (n:Persona {id:{a}}) SET n.nombre = {b}, n.celular = {c}, n.correo = {d}, n.edad = {e}, n.estadoCivil = {f} RETURN n;"
         //personales
-        query = "MERGE (n:Persona {id:{a}}) DELETE (n);"
+        query = "MATCH (n:Persona {id:{a}}) OPTIONAL MATCH (n)-[r]-() DELETE n,r;"
         session
             .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
         //familiares
-        query = "MERGE (n:dFamiliar {id:{a}}) DELETE (n);"
+        query = "MATCH (n:dFamiliar {id:{a}}) DELETE (n);"
         session
             .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
         //sanitarios
-        query = "MERGE (n:dSanitario {id:{a}}) DELETE (n);"
+        query = "MATCH (n:dSanitario {id:{a}}) DELETE (n);"
         session
             .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
         //legales
-        query = "MERGE (n:dLegal {id:{a}}) DELETE (n);"
+        query = "MATCH (n:dLegal {id:{a}}) DELETE (n);"
         session
             .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
         //academicos
-        query = "MERGE (n:dAcademico {id:{a}}) DELETE (n);"
+        query = "MATCH (n:dAcademico {id:{a}}) DELETE (n);"
         session
             .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
         //labpro
-        query = "MERGE (n:dLabPro {id:{a}}) DELETE (n);"
+        query = "MATCH (n:dLabPro {id:{a}}) DELETE (n);"
         session
             .run(query,{a:id})
             .then(function(result){
                 session.close();
             });
         //condiciones
-        query = "MERGE (n:dCondicion {id:{a}}) DELETE (n);"
+        query = "MATCH (n:dCondicion {id:{a}}) DELETE (n);"
         session
             .run(query,{a:id})
             .then(function(result){
@@ -641,20 +669,14 @@ app.post('/crudPersona', function(req, res){
             });
         break;
     }
-    var array = [];
-    var arrayFamiliares = [];
-    var arraySanitarios = [];
-    var arrayLegales = [];
-    var arrayAcademicos = [];
-    var arrayLabPro = [];
-    var arrayCondiciones = [];
-    var cont = 0;
+
     query = 'MATCH (n:Persona) RETURN n;';
     session
     .run(query)
     .then(function(result){
-
         result.records.forEach(function(record){
+            array = [];
+            cont = 0;
             array.push({
                 id: record._fields[0].properties.id,
                 nombre: record._fields[0].properties.nombre,
@@ -676,6 +698,7 @@ app.post('/crudPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
+        arrayFamiliares = [];
         result.records.forEach(function(record){
             arrayFamiliares.push({
                 idPadre: record._fields[0].properties.idPadre,
@@ -697,6 +720,7 @@ app.post('/crudPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
+        arraySanitarios = [];
         result.records.forEach(function(record){
             arraySanitarios.push({
                 enfermedades: record._fields[0].properties.enfermedades,
@@ -714,6 +738,7 @@ app.post('/crudPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
+        arrayLegales = [];
         result.records.forEach(function(record){
             arrayLegales.push({
                 militar: record._fields[0].properties.militar,
@@ -730,6 +755,7 @@ app.post('/crudPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
+        arrayAcademicos = [];
         result.records.forEach(function(record){
             arrayAcademicos.push({
                 escuela: record._fields[0].properties.escuela,
@@ -748,6 +774,7 @@ app.post('/crudPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
+        arrayLabPro = [];
         result.records.forEach(function(record){
             arrayLabPro.push({
                 nombreEmpresa: record._fields[0].properties.nombreEmpresa,
@@ -767,6 +794,7 @@ app.post('/crudPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
+        arrayCondiciones = [];
         result.records.forEach(function(record){
             arrayCondiciones.push({
                 posPuestos: record._fields[0].properties.posPuestos,
@@ -791,14 +819,306 @@ app.post('/crudPersona', function(req, res){
 
 });
 
-//LOGIN
-app.post('/loginEmpresa', function(req, res){
-    res.render('loginEmpresa',{
+//LOGIN empresa
+app.post('/puenteLoginEmpresa', function(req, res){
+    res.render('temp',{
+            tipo: 0
     });
 });
-//LOGIN
-app.post('/loginPersona', function(req, res){
-    res.render('loginPersona',{
+
+app.post('/loginEmpresaGO', function(req, res){
+    var rtn = req.body.rtn;
+    query = 'MATCH (n:Empleo {idEmpresa: {a}}) RETURN n;';
+    session
+    .run(query,{a:rtn})
+    .then(function(result){
+        cont = 0;
+        arrayEmpleo = [];
+        result.records.forEach(function(record){
+            arrayEmpleo.push({
+                idEmpleo: record._fields[0].properties.idEmpleo,
+                idEmpresa: record._fields[0].properties.idEmpresa,
+                nombreEmpresa: record._fields[0].properties.nombreEmpresa,
+                puesto: record._fields[0].properties.puesto,
+                numPlazas: record._fields[0].properties.numPlazas,
+                salario: record._fields[0].properties.salario,
+                numHijos: record._fields[0].properties.numHijos,
+                consMed: record._fields[0].properties.consMed,
+                hospital: record._fields[0].properties.hospital,
+                militar: record._fields[0].properties.militar,
+                carcel: record._fields[0].properties.carcel,
+                aniosExp: record._fields[0].properties.aniosExp,
+                profesion: record._fields[0].properties.profesion,
+                contrato: record._fields[0].properties.contrato,
+                indice: cont
+            });
+            cont++;
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+
+    query = 'MATCH (n:Persona) RETURN n;';
+    session
+    .run(query)
+    .then(function(result){
+        cont = 0;
+        array = [];
+        result.records.forEach(function(record){
+            array.push({
+                id: record._fields[0].properties.id,
+                nombre: record._fields[0].properties.nombre,
+                celular: record._fields[0].properties.celular,
+                correo: record._fields[0].properties.correo,
+                edad: record._fields[0].properties.edad,
+                estadoCivil: record._fields[0].properties.estadoCivil,
+                indice: cont
+            });
+            cont++;
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+    //dFamiliar
+    query = 'MATCH (n:dFamiliar) RETURN n;';
+    session
+    .run(query)
+    .then(function(result){
+        arrayFamiliares = [];
+        result.records.forEach(function(record){
+            arrayFamiliares.push({
+                idPadre: record._fields[0].properties.idPadre,
+                padre: record._fields[0].properties.padre,
+                idMadre: record._fields[0].properties.idMadre,
+                madre: record._fields[0].properties.madre,
+                ccPadre: record._fields[0].properties.ccPadre,
+                ccMadre: record._fields[0].properties.ccMadre,
+                numHijos: record._fields[0].properties.numHijos,
+            });
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+    //dSanitario
+    query = 'MATCH (n:dSanitario) RETURN n;';
+    session
+    .run(query)
+    .then(function(result){
+        arraySanitarios = [];
+        result.records.forEach(function(record){
+            arraySanitarios.push({
+                enfermedades: record._fields[0].properties.enfermedades,
+                medicamentos: record._fields[0].properties.medicamentos,
+                hospital: record._fields[0].properties.hospital
+            });
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+    //dLegal
+    query = 'MATCH (n:dLegal) RETURN n;';
+    session
+    .run(query)
+    .then(function(result){
+        arrayLegales = [];
+        result.records.forEach(function(record){
+            arrayLegales.push({
+                militar: record._fields[0].properties.militar,
+                carcel: record._fields[0].properties.carcel
+            });
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+    //dAcademico
+    query = 'MATCH (n:dAcademico) RETURN n;';
+    session
+    .run(query)
+    .then(function(result){
+        arrayAcademicos = [];
+        result.records.forEach(function(record){
+            arrayAcademicos.push({
+                escuela: record._fields[0].properties.escuela,
+                colegio: record._fields[0].properties.colegio,
+                upreg: record._fields[0].properties.upreg,
+                upost: record._fields[0].properties.upost
+            });
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+    //dLabPro
+    query = 'MATCH (n:dLabPro) RETURN n;';
+    session
+    .run(query)
+    .then(function(result){
+        arrayLabPro = [];
+        result.records.forEach(function(record){
+            arrayLabPro.push({
+                nombreEmpresa: record._fields[0].properties.nombreEmpresa,
+                ulSalario: record._fields[0].properties.ulSalario,
+                profesion: record._fields[0].properties.profesion,
+                aniosExp: record._fields[0].properties.aniosExp,
+                puestos: record._fields[0].properties.puestos
+            });
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+
+    //dCondiciones
+    query = 'MATCH (n:dCondicion) RETURN n;';
+    session
+    .run(query)
+    .then(function(result){
+        arrayCondiciones = [];
+        result.records.forEach(function(record){
+            arrayCondiciones.push({
+                posPuestos: record._fields[0].properties.posPuestos,
+                contrato: record._fields[0].properties.contrato,
+                salario: record._fields[0].properties.salario
+            });
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+
+    query = 'MATCH (n:Empresa {rtn: {a}}) RETURN n.nombre;';
+    var nombre = "NO HAY";
+    session
+    .run(query,{a:rtn})
+    .then(function(result){
+        result.records.map(record => {
+            nombre = record.get("n.nombre");
+        });
+        res.render('loginEmpresa',{
+            personas: array,
+            familiares :arrayFamiliares,
+            sanitarios:arraySanitarios,
+            legales:arrayLegales,
+            academicos:arrayAcademicos,
+            LabPros:arrayLabPro,
+            condiciones:arrayCondiciones,
+            empleos: arrayEmpleo,
+
+            nombreEmpresa: nombre
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+
+
+});
+//LOGIN persona
+app.post('/puenteLoginPersona', function(req, res){
+    res.render('temp',{
+            tipo: 1
+    });
+});
+
+app.post('/loginPersonaGO', function(req, res){
+    var id = req.body.id;
+    var nombreP;
+
+    query = 'MATCH (m:Persona {id:{a}}) RETURN m.nombre;';
+    session
+    .run(query,{a:id})
+    .then(function(result){
+        result.records.map(record => {
+            nombreP = record.get("m.nombre");
+        });
+        session.close();
+    });
+
+    query = 'MATCH (m)-[:OFRECIDO_A]->(n:Persona {id: {a}}) RETURN m;';
+    session
+    .run(query,{a:id})
+    .then(function(result){
+        cont = 0;
+        arrayEmpleo = [];
+        result.records.forEach(function(record){
+            arrayEmpleo.push({
+                idEmpleo: record._fields[0].properties.idEmpleo,
+                idEmpresa: record._fields[0].properties.idEmpresa,
+                nombreEmpresa: record._fields[0].properties.nombreEmpresa,
+                puesto: record._fields[0].properties.puesto,
+                numPlazas: record._fields[0].properties.numPlazas,
+                salario: record._fields[0].properties.salario,
+                numHijos: record._fields[0].properties.numHijos,
+                consMed: record._fields[0].properties.consMed,
+                hospital: record._fields[0].properties.hospital,
+                militar: record._fields[0].properties.militar,
+                carcel: record._fields[0].properties.carcel,
+                aniosExp: record._fields[0].properties.aniosExp,
+                profesion: record._fields[0].properties.profesion,
+                contrato: record._fields[0].properties.contrato,
+                indice: cont
+            });
+            cont++;
+        });
+        res.render('loginPersona',{
+            empleos:arrayEmpleo,
+            nombre:nombreP,
+            id: id
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+
+});
+
+app.post('/ofrecerContrato',function(req, res){
+    var idPersona = req.body.idPersona;
+    var idEmpleo = req.body.idEmpleo;
+
+    query = 'MATCH (m:Empleo {idEmpleo: {a}}) MATCH (n:Persona {id: {b}}) CREATE (m)-[:OFRECIDO_A]->(n);';
+    session
+    .run(query,{a:idEmpleo,b:idPersona})
+    .then(function(result){
+        res.render('index',{
+
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
+    });
+});
+
+app.post('/aceptarContrato',function(req, res){
+    var idEmpleo = req.body.idEmpleo;
+    var idPersona = req.body.idPersona;
+    query = 'MATCH (m:Empleo {idEmpleo: {a}})-[r:OFRECIDO_A]->(n:Persona {id: {b}}) DELETE r;';
+    session
+    .run(query,{a:idEmpleo,b:idPersona})
+    .then(function(result){
+        res.render('index',{
+
+        });
+        session.close();
+    })
+    .catch(function(err){
+        console.log(err);
     });
 });
 
