@@ -57,45 +57,45 @@
                   }
               }
           }
-          function visualizarPersona(c){
+          function visualizarPersona(b){
 			  //personales
-			  $("#a").val(matrizPersonas[c][0]);
-			  $("#b").val(matrizPersonas[c][1]);
-			  $("#c").val(matrizPersonas[c][2]);
-			  $("#d").val(matrizPersonas[c][3]);
-			  $("#e").val(matrizPersonas[c][4]);
-			  $("#f").val(matrizPersonas[c][5]);
+			  $("#a").val(matrizPersonas[b][0]);
+			  $("#b").val(matrizPersonas[b][1]);
+			  $("#c").val(matrizPersonas[b][2]);
+			  $("#d").val(matrizPersonas[b][3]);
+			  $("#e").val(matrizPersonas[b][4]);
+			  $("#f").val(matrizPersonas[b][5]);
 			  //familiares
-			  $("#g").val(matrizPFamiliares[c][0]);
-			  $("#h").val(matrizPFamiliares[c][1]);
-			  $("#i").val(matrizPFamiliares[c][2]);
-			  $("#j").val(matrizPFamiliares[c][3]);
-			  $("#k").val(matrizPFamiliares[c][4]);
-			  $("#l").val(matrizPFamiliares[c][5]);
-			  $("#m").val(matrizPFamiliares[c][6]);
+			  $("#g").val(matrizPFamiliares[b][0]);
+			  $("#h").val(matrizPFamiliares[b][1]);
+			  $("#i").val(matrizPFamiliares[b][2]);
+			  $("#j").val(matrizPFamiliares[b][3]);
+			  $("#k").val(matrizPFamiliares[b][4]);
+			  $("#l").val(matrizPFamiliares[b][5]);
+			  $("#m").val(matrizPFamiliares[b][6]);
 			  //sanitarios
-			  $("#n").val(matrizPSanitarios[c][0]);
-			  $("#o").val(matrizPSanitarios[c][1]);
-			  $("#p").val(matrizPSanitarios[c][2]);
+			  $("#n").val(matrizPSanitarios[b][0]);
+			  $("#o").val(matrizPSanitarios[b][1]);
+			  $("#p").val(matrizPSanitarios[b][2]);
 			  //legales
-			  $("#q").val(matrizPLegales[c][0]);
-			  $("#r").val(matrizPLegales[c][1]);
+			  $("#q").val(matrizPLegales[b][0]);
+			  $("#r").val(matrizPLegales[b][1]);
 			  //academicos
-			  $("#s").val(matrizPAcademicos[c][0]);
-			  $("#t").val(matrizPAcademicos[c][1]);
-			  $("#u").val(matrizPAcademicos[c][2]);
-			  $("#v").val(matrizPAcademicos[c][3]);
+			  $("#s").val(matrizPAcademicos[b][0]);
+			  $("#t").val(matrizPAcademicos[b][1]);
+			  $("#u").val(matrizPAcademicos[b][2]);
+			  $("#v").val(matrizPAcademicos[b][3]);
 			  //laborales y profesionales
-			  $("#w").val(matrizPLabPro[c][0]);
-			  $("#x").val(matrizPLabPro[c][1]);
-			  $("#y").val(matrizPLabPro[c][2]);
-			  $("#z").val(matrizPLabPro[c][3]);
-			  $("#aa").val(matrizPLabPro[c][4]);
+			  $("#w").val(matrizPLabPro[b][0]);
+			  $("#x").val(matrizPLabPro[b][1]);
+			  $("#y").val(matrizPLabPro[b][2]);
+			  $("#z").val(matrizPLabPro[b][3]);
+			  $("#aa").val(matrizPLabPro[b][4]);
 			  //condiciones de empleo
-			  $("#ab").val(matrizPCondiciones[c][0]);
-			  $("#ac").val(matrizPCondiciones[c][1]);
-			  $("#ad").val(matrizPCondiciones[c][2]);
-              $("#idPersona").val(matrizPersonas[c][0]);
+			  $("#ab").val(matrizPCondiciones[b][0]);
+			  $("#ac").val(matrizPCondiciones[b][1]);
+			  $("#ad").val(matrizPCondiciones[b][2]);
+              $("#idPersona").val(matrizPersonas[b][0]);
           }
       </script>
 
@@ -112,8 +112,7 @@
 		  </script>
 	  <% }) %>
 	  <% legales.forEach(function(legal){ %>
-		  <script type="text/javascript">
-				alert("LEGAL");
+		  <script type="text/javascript">				
 			  matrizPLegales.push(['<%= legal.militar %>','<%= legal.carcel %>']);
 		  </script>
 	  <% }) %>

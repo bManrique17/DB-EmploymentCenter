@@ -670,7 +670,7 @@ app.post('/crudPersona', function(req, res){
         break;
     }
 
-    query = 'MATCH (n:Persona) RETURN n;';
+    query = 'MATCH (n:Persona) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -694,7 +694,7 @@ app.post('/crudPersona', function(req, res){
         console.log(err);
     });
     //dFamiliar
-    query = 'MATCH (n:dFamiliar) RETURN n;';
+    query = 'MATCH (n:dFamiliar) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -716,7 +716,7 @@ app.post('/crudPersona', function(req, res){
         console.log(err);
     });
     //dSanitario
-    query = 'MATCH (n:dSanitario) RETURN n;';
+    query = 'MATCH (n:dSanitario) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -734,7 +734,7 @@ app.post('/crudPersona', function(req, res){
         console.log(err);
     });
     //dLegal
-    query = 'MATCH (n:dLegal) RETURN n;';
+    query = 'MATCH (n:dLegal) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -751,7 +751,7 @@ app.post('/crudPersona', function(req, res){
         console.log(err);
     });
     //dAcademico
-    query = 'MATCH (n:dAcademico) RETURN n;';
+    query = 'MATCH (n:dAcademico) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -770,7 +770,7 @@ app.post('/crudPersona', function(req, res){
         console.log(err);
     });
     //dLabPro
-    query = 'MATCH (n:dLabPro) RETURN n;';
+    query = 'MATCH (n:dLabPro) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -790,7 +790,7 @@ app.post('/crudPersona', function(req, res){
         console.log(err);
     });
     //dCondiciones
-    query = 'MATCH (n:dCondicion) RETURN n;';
+    query = 'MATCH (n:dCondicion) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -860,7 +860,7 @@ app.post('/loginEmpresaGO', function(req, res){
         console.log(err);
     });
 
-    query = 'MATCH (n:Persona) RETURN n;';
+    query = 'MATCH (n:Persona) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -884,7 +884,7 @@ app.post('/loginEmpresaGO', function(req, res){
         console.log(err);
     });
     //dFamiliar
-    query = 'MATCH (n:dFamiliar) RETURN n;';
+    query = 'MATCH (n:dFamiliar) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -906,7 +906,7 @@ app.post('/loginEmpresaGO', function(req, res){
         console.log(err);
     });
     //dSanitario
-    query = 'MATCH (n:dSanitario) RETURN n;';
+    query = 'MATCH (n:dSanitario) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -924,7 +924,7 @@ app.post('/loginEmpresaGO', function(req, res){
         console.log(err);
     });
     //dLegal
-    query = 'MATCH (n:dLegal) RETURN n;';
+    query = 'MATCH (n:dLegal) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -941,7 +941,7 @@ app.post('/loginEmpresaGO', function(req, res){
         console.log(err);
     });
     //dAcademico
-    query = 'MATCH (n:dAcademico) RETURN n;';
+    query = 'MATCH (n:dAcademico) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -960,7 +960,7 @@ app.post('/loginEmpresaGO', function(req, res){
         console.log(err);
     });
     //dLabPro
-    query = 'MATCH (n:dLabPro) RETURN n;';
+    query = 'MATCH (n:dLabPro) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
@@ -981,7 +981,7 @@ app.post('/loginEmpresaGO', function(req, res){
     });
 
     //dCondiciones
-    query = 'MATCH (n:dCondicion) RETURN n;';
+    query = 'MATCH (n:dCondicion) RETURN n ORDER BY n.id;';
     session
     .run(query)
     .then(function(result){
