@@ -31,7 +31,7 @@
           var matrizPCondiciones = [];
           function actualizarTabla(cc){
               $("#idEmpleo").val(matrizEmpleos[cc][0]);
-              for (var i=0 ; i<matrizPersonas.length ; i++){
+              for (var i=1 ; i<=matrizPersonas.length ; i++){
                   var fila = (parseInt(cc,10)+1);
                   if(   (matrizPCondiciones[cc][0].includes(matrizEmpleos[cc][3],0) || matrizEmpleos[cc][3] == "N/A" || matrizEmpleos[cc][3] == "" )  &&
                         (matrizPCondiciones[cc][2] == matrizEmpleos[cc][5] || matrizEmpleos[cc][5] == "N/A" || matrizEmpleos[cc][5] == "" ) &&
@@ -44,15 +44,15 @@
                         (matrizPLabPro[cc][2].includes(matrizEmpleos[cc][12],0) || matrizEmpleos[cc][12] == "N/A" || matrizEmpleos[cc][12] == "" ) &&
                         (matrizPCondiciones[cc][1].includes(matrizEmpleos[cc][13],0) || matrizEmpleos[cc][13] == "N/A" || matrizEmpleos[cc][13] == "" )){
 
-                            document.getElementById('tablaPersonas').rows[fila].cells[3].innerHTML = "A";
+                            document.getElementById('tablaPersonas').rows[i].cells[3].innerHTML = "A";
                   }else{
 
                       if(   (matrizPCondiciones[cc][0].includes(matrizEmpleos[cc][3],0) || matrizEmpleos[cc][3] == "N/A" || matrizEmpleos[cc][3] == "" )  &&
                             (matrizPCondiciones[cc][2] == matrizEmpleos[cc][5] || matrizEmpleos[cc][5] == "N/A" || matrizEmpleos[cc][5] == "" ) ){
 
-                                document.getElementById('tablaPersonas').rows[fila].cells[3].innerHTML = "B";
+                                document.getElementById('tablaPersonas').rows[i].cells[3].innerHTML = "B";
                       }else{
-                            document.getElementById('tablaPersonas').rows[fila].cells[3].innerHTML = "C";
+                            document.getElementById('tablaPersonas').rows[i].cells[3].innerHTML = "C";
                       }
                   }
               }
@@ -158,7 +158,7 @@
                                '<%= empleo.hospital %>','<%= empleo.militar %>','<%= empleo.carcel %>','<%= empleo.aniosExp %>',
                                '<%= empleo.profesion %>','<%= empleo.contrato %>']);
                     </script>
-                     <td><button type="button" id=<%= empleo.indice %> class='btn btn-danger' onclick="actualizarTabla(this.id)">Ver</button></td>
+                     <td><button type="button" id=<%= empleo.indice %> class='btn btn-danger' onclick="visualizarPersona(this.id)">Ver</button></td>
                      <td><%= empleo.nombreEmpresa %></td>
                      <td><%= empleo.puesto %></td>
                      <td><%= empleo.salario %></td>
