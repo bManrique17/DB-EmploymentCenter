@@ -1018,6 +1018,7 @@ app.post('/loginEmpresaGO', function(req, res){
             empleos: arrayEmpleo,
 
             nombreEmpresa: nombre
+			rtn: rtn
         });
         session.close();
     })
@@ -1095,6 +1096,223 @@ app.post('/ofrecerContrato',function(req, res){
     session
     .run(query,{a:idEmpleo,b:idPersona})
     .then(function(result){
+		
+		
+		
+		
+				
+		
+		var rtn = req.body.rtn;
+		query = 'MATCH (n:Empleo {idEmpresa: {a}}) RETURN n;';
+		session
+		.run(query,{a:rtn})
+		.then(function(result){
+			cont = 0;
+			arrayEmpleo = [];
+			result.records.forEach(function(record){
+				arrayEmpleo.push({
+					idEmpleo: record._fields[0].properties.idEmpleo,
+					idEmpresa: record._fields[0].properties.idEmpresa,
+					nombreEmpresa: record._fields[0].properties.nombreEmpresa,
+					puesto: record._fields[0].properties.puesto,
+					numPlazas: record._fields[0].properties.numPlazas,
+					salario: record._fields[0].properties.salario,
+					numHijos: record._fields[0].properties.numHijos,
+					consMed: record._fields[0].properties.consMed,
+					hospital: record._fields[0].properties.hospital,
+					militar: record._fields[0].properties.militar,
+					carcel: record._fields[0].properties.carcel,
+					aniosExp: record._fields[0].properties.aniosExp,
+					profesion: record._fields[0].properties.profesion,
+					contrato: record._fields[0].properties.contrato,
+					indice: cont
+				});
+				cont++;
+			});
+			session.close();
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+
+		query = 'MATCH (n:Persona) RETURN n ORDER BY n.id;';
+		session
+		.run(query)
+		.then(function(result){
+			cont = 0;
+			array = [];
+			result.records.forEach(function(record){
+				array.push({
+					id: record._fields[0].properties.id,
+					nombre: record._fields[0].properties.nombre,
+					celular: record._fields[0].properties.celular,
+					correo: record._fields[0].properties.correo,
+					edad: record._fields[0].properties.edad,
+					estadoCivil: record._fields[0].properties.estadoCivil,
+					indice: cont
+				});
+				cont++;
+			});
+			session.close();
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+		//dFamiliar
+		query = 'MATCH (n:dFamiliar) RETURN n ORDER BY n.id;';
+		session
+		.run(query)
+		.then(function(result){
+			arrayFamiliares = [];
+			result.records.forEach(function(record){
+				arrayFamiliares.push({
+					idPadre: record._fields[0].properties.idPadre,
+					padre: record._fields[0].properties.padre,
+					idMadre: record._fields[0].properties.idMadre,
+					madre: record._fields[0].properties.madre,
+					ccPadre: record._fields[0].properties.ccPadre,
+					ccMadre: record._fields[0].properties.ccMadre,
+					numHijos: record._fields[0].properties.numHijos,
+				});
+			});
+			session.close();
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+		//dSanitario
+		query = 'MATCH (n:dSanitario) RETURN n ORDER BY n.id;';
+		session
+		.run(query)
+		.then(function(result){
+			arraySanitarios = [];
+			result.records.forEach(function(record){
+				arraySanitarios.push({
+					enfermedades: record._fields[0].properties.enfermedades,
+					medicamentos: record._fields[0].properties.medicamentos,
+					hospital: record._fields[0].properties.hospital
+				});
+			});
+			session.close();
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+		//dLegal
+		query = 'MATCH (n:dLegal) RETURN n ORDER BY n.id;';
+		session
+		.run(query)
+		.then(function(result){
+			arrayLegales = [];
+			result.records.forEach(function(record){
+				arrayLegales.push({
+					militar: record._fields[0].properties.militar,
+					carcel: record._fields[0].properties.carcel
+				});
+			});
+			session.close();
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+		//dAcademico
+		query = 'MATCH (n:dAcademico) RETURN n ORDER BY n.id;';
+		session
+		.run(query)
+		.then(function(result){
+			arrayAcademicos = [];
+			result.records.forEach(function(record){
+				arrayAcademicos.push({
+					escuela: record._fields[0].properties.escuela,
+					colegio: record._fields[0].properties.colegio,
+					upreg: record._fields[0].properties.upreg,
+					upost: record._fields[0].properties.upost
+				});
+			});
+			session.close();
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+		//dLabPro
+		query = 'MATCH (n:dLabPro) RETURN n ORDER BY n.id;';
+		session
+		.run(query)
+		.then(function(result){
+			arrayLabPro = [];
+			result.records.forEach(function(record){
+				arrayLabPro.push({
+					nombreEmpresa: record._fields[0].properties.nombreEmpresa,
+					ulSalario: record._fields[0].properties.ulSalario,
+					profesion: record._fields[0].properties.profesion,
+					aniosExp: record._fields[0].properties.aniosExp,
+					puestos: record._fields[0].properties.puestos
+				});
+			});
+			session.close();
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+
+		//dCondiciones
+		query = 'MATCH (n:dCondicion) RETURN n ORDER BY n.id;';
+		session
+		.run(query)
+		.then(function(result){
+			arrayCondiciones = [];
+			result.records.forEach(function(record){
+				arrayCondiciones.push({
+					posPuestos: record._fields[0].properties.posPuestos,
+					contrato: record._fields[0].properties.contrato,
+					salario: record._fields[0].properties.salario
+				});
+			});
+			session.close();
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+
+		query = 'MATCH (n:Empresa {rtn: {a}}) RETURN n.nombre;';
+		var nombre = "NO HAY";
+		session
+		.run(query,{a:rtn})
+		.then(function(result){
+			result.records.map(record => {
+				nombre = record.get("n.nombre");
+			});
+			res.render('loginEmpresa',{
+				personas: array,
+				familiares :arrayFamiliares,
+				sanitarios:arraySanitarios,
+				legales:arrayLegales,
+				academicos:arrayAcademicos,
+				LabPros:arrayLabPro,
+				condiciones:arrayCondiciones,
+				empleos: arrayEmpleo,
+
+				nombreEmpresa: nombre
+			});
+			session.close();
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
         res.render('index',{
 
         });

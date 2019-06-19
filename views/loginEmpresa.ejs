@@ -9,10 +9,8 @@
     <title>Centro de Empleo Jonny Loco</title>
   </head>
   <body id="body">
-      <form class="" action="/ofrecerContrato" method="post">
-              <input type=text id="idEmpleo" style="display:none" name="idEmpleo" value="" class=form-control aria-describedby=basic-addon1>
-              <input type=text id="idPersona" style="display:none" name="idPersona" value="" class=form-control aria-describedby=basic-addon1>
-              <button type="submit" class="btn btn-danger">Salir</button>
+      <form class="" action="/inicio" method="post">              
+             <button type="submit" class="btn btn-danger">Salir</button>
       </form>
       <h1>Busqueda de personal</h1>
       <p>En esta seccion podra visualizar las personas disponibles para los empleos que su empresas
@@ -28,8 +26,9 @@
           var matrizPLegales   = [];
           var matrizPAcademicos = [];
           var matrizPLabPro = [];
-          var matrizPCondiciones = [];
-          function actualizarTabla(cc){
+          var matrizPCondiciones = [];		  		 
+		  
+          function actualizarTabla(cc){				
               $("#idEmpleo").val(matrizEmpleos[cc][0]);
               for (var i=1 ; i<=matrizPersonas.length ; i++){
                   var fila = i-1;
@@ -313,14 +312,18 @@
 
             </div>
             <div class="col-sm">
-
-                <button type="button" id="contrato" class='btn btn-danger' onclick="ofrecido(this.id)">___________Ofrecer contrato___________</button>
-
-                <script type="text/javascript">
-                    function ofrecido(){
-                        alert("Contrato ofrecido");
+			<form class="" action="/ofrecerContrato" method="post">
+                <button type="submit" id="contrato" class='btn btn-danger' onclick="ofrecido()">___________Ofrecer contrato___________</button>				
+				<input type=text id="idEmpleo" style="display:none" name="idEmpleo" value="" class=form-control aria-describedby=basic-addon1>
+				<input type=text id="idPersona" style="display:none" name="idPersona" value="" class=form-control aria-describedby=basic-addon1>				
+				<input type=text id="rtn" style="display:none" name="rtn" value="" class=form-control aria-describedby=basic-addon1>				
+                <script type="text/javascript">				
+                    function ofrecido(){						
+						$("#rtn").val('<%= rtn %>');
+                        alert("Contrato ofrecido");						
                     }
                 </script>
+			</form>
             </div>
             <div class="col-sm">
 
