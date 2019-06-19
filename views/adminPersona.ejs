@@ -110,8 +110,7 @@
 
           <% personas.forEach(function(persona){ %>
              <tr>
-                 <script type="text/javascript">
-					alert("aja");
+                 <script type="text/javascript">					
                     matrizPersonas.push(['<%= persona.id %>','<%= persona.nombre %>','<%= persona.celular %>','<%= persona.correo %>','<%= persona.edad %>','<%= persona.estadoCivil %>']);                    
                  </script>
                   <td><button type="button" id=<%= persona.indice %> class='btn btn-danger' onclick="colocarValores(this.id)">Ver</button></td>

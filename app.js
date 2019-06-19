@@ -674,9 +674,9 @@ app.post('/crudPersona', function(req, res){
     session
     .run(query)
     .then(function(result){
-        result.records.forEach(function(record){
-            array = new Array();
-            cont = 0;
+		array = new Array();
+		cont = 0;
+        result.records.forEach(function(record){                       
             array.push({
                 id: record._fields[0].properties.id,
                 nombre: record._fields[0].properties.nombre,
