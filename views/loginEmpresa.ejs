@@ -58,80 +58,81 @@
               }
           }
           function visualizarPersona(c){
-              //personales
-              $("#a").val(matrizPersonas[c][0]);
-              $("#b").val(matrizPersonas[c][1]);
-              $("#c").val(matrizPersonas[c][2]);
-              $("#d").val(matrizPersonas[c][3]);
-              $("#e").val(matrizPersonas[c][4]);
-              $("#f").val(matrizPersonas[c][5]);
-              //familiares
-              $("#g").val(matrizPFamiliares[c][0]);
-              $("#h").val(matrizPFamiliares[c][1]);
-              $("#i").val(matrizPFamiliares[c][2]);
-              $("#j").val(matrizPFamiliares[c][3]);
-              $("#k").val(matrizPFamiliares[c][4]);
-              $("#l").val(matrizPFamiliares[c][5]);
-              $("#m").val(matrizPFamiliares[c][6]);
-              //sanitarios
-              $("#n").val(matrizPSanitarios[c][0]);
-              $("#o").val(matrizPSanitarios[c][1]);
-              $("#p").val(matrizPSanitarios[c][2]);
-              //legales
-              $("#q").val(matrizPLegales[c][0]);
-              $("#r").val(matrizPLegales[c][1]);
-              //academicos
-              $("#s").val(matrizPAcademicos[c][0]);
-              $("#t").val(matrizPAcademicos[c][1]);
-              $("#u").val(matrizPAcademicos[c][2]);
-              $("#v").val(matrizPAcademicos[c][3]);
-              //laborales y profesionales
-              $("#w").val(matrizPLabPro[c][0]);
-              $("#x").val(matrizPLabPro[c][1]);
-              $("#y").val(matrizPLabPro[c][2]);
-              $("#z").val(matrizPLabPro[c][3]);
-              $("#aa").val(matrizPLabPro[c][4]);
-              //condiciones de empleo
-              $("#ab").val(matrizPCondiciones[c][0]);
-              $("#ac").val(matrizPCondiciones[c][1]);
-              $("#ad").val(matrizPCondiciones[c][2]);
+			  //personales
+			  $("#a").val(matrizPersonas[c][0]);
+			  $("#b").val(matrizPersonas[c][1]);
+			  $("#c").val(matrizPersonas[c][2]);
+			  $("#d").val(matrizPersonas[c][3]);
+			  $("#e").val(matrizPersonas[c][4]);
+			  $("#f").val(matrizPersonas[c][5]);
+			  //familiares
+			  $("#g").val(matrizPFamiliares[c][0]);
+			  $("#h").val(matrizPFamiliares[c][1]);
+			  $("#i").val(matrizPFamiliares[c][2]);
+			  $("#j").val(matrizPFamiliares[c][3]);
+			  $("#k").val(matrizPFamiliares[c][4]);
+			  $("#l").val(matrizPFamiliares[c][5]);
+			  $("#m").val(matrizPFamiliares[c][6]);
+			  //sanitarios
+			  $("#n").val(matrizPSanitarios[c][0]);
+			  $("#o").val(matrizPSanitarios[c][1]);
+			  $("#p").val(matrizPSanitarios[c][2]);
+			  //legales
+			  $("#q").val(matrizPLegales[c][0]);
+			  $("#r").val(matrizPLegales[c][1]);
+			  //academicos
+			  $("#s").val(matrizPAcademicos[c][0]);
+			  $("#t").val(matrizPAcademicos[c][1]);
+			  $("#u").val(matrizPAcademicos[c][2]);
+			  $("#v").val(matrizPAcademicos[c][3]);
+			  //laborales y profesionales
+			  $("#w").val(matrizPLabPro[c][0]);
+			  $("#x").val(matrizPLabPro[c][1]);
+			  $("#y").val(matrizPLabPro[c][2]);
+			  $("#z").val(matrizPLabPro[c][3]);
+			  $("#aa").val(matrizPLabPro[c][4]);
+			  //condiciones de empleo
+			  $("#ab").val(matrizPCondiciones[c][0]);
+			  $("#ac").val(matrizPCondiciones[c][1]);
+			  $("#ad").val(matrizPCondiciones[c][2]);
               $("#idPersona").val(matrizPersonas[c][0]);
           }
       </script>
 
-      <% familiares.forEach(function(familiar){ %>
-          <script type="text/javascript">
-            matrizPFamiliares.push(['<%= familiar.idPadre %>','<%= familiar.padre %>','<%= familiar.idMadre %>','<%= familiar.madre %>',
-                                  '<%= familiar.ccPadre %>','<%= familiar.ccMadre %>','<%= familiar.numHijos %>']);
-          </script>
-      <% }) %>
-      <% sanitarios.forEach(function(sanitario){ %>
-          <script type="text/javascript">
-              matrizPSanitarios.push(['<%= sanitario.enfermedades %>','<%= sanitario.medicamentos %>','<%= sanitario.hospital %>']);
-          </script>
-      <% }) %>
-      <% legales.forEach(function(legal){ %>
-          <script type="text/javascript">
-              matrizPLegales.push(['<%= legal.militar %>','<%= legal.carcel %>']);
-          </script>
-      <% }) %>
-      <% academicos.forEach(function(academico){ %>
-          <script type="text/javascript">
-              matrizPAcademicos.push(['<%= academico.escuela %>','<%= academico.colegio %>',
-                                      '<%= academico.upreg %>','<%= academico.upost %>']);
-          </script>
-      <% }) %>
-      <% LabPros.forEach(function(LabPro){ %>
-          <script type="text/javascript">
-              matrizPLabPro.push(['<%= LabPro.nombreEmpresa %>','<%= LabPro.ulSalario %>','<%= LabPro.profesion %>',
-                                      '<%= LabPro.aniosExp %>','<%= LabPro.puestos %>']);
-          </script>
-      <% }) %>
-      <% condiciones.forEach(function(condicion){ %>
-          <script type="text/javascript">
-              matrizPCondiciones.push(['<%= condicion.posPuestos %>','<%= condicion.contrato %>','<%= condicion.salario %>']);
-          </script>
-      <% }) %>
+	  </script>
+	  <% familiares.forEach(function(familiar){ %>
+		  <script type="text/javascript">
+			matrizPFamiliares.push(['<%= familiar.idPadre %>','<%= familiar.padre %>','<%= familiar.idMadre %>','<%= familiar.madre %>',
+								  '<%= familiar.ccPadre %>','<%= familiar.ccMadre %>','<%= familiar.numHijos %>']);
+		  </script>
+	  <% }) %>
+	  <% sanitarios.forEach(function(sanitario){ %>
+		  <script type="text/javascript">
+			  matrizPSanitarios.push(['<%= sanitario.enfermedades %>','<%= sanitario.medicamentos %>','<%= sanitario.hospital %>']);
+		  </script>
+	  <% }) %>
+	  <% legales.forEach(function(legal){ %>
+		  <script type="text/javascript">
+			  matrizPLegales.push(['<%= legal.militar %>','<%= legal.carcel %>']);
+		  </script>
+	  <% }) %>
+	  <% academicos.forEach(function(academico){ %>
+		  <script type="text/javascript">
+			  matrizPAcademicos.push(['<%= academico.escuela %>','<%= academico.colegio %>',
+									  '<%= academico.upreg %>','<%= academico.upost %>']);
+		  </script>
+	  <% }) %>
+	  <% LabPros.forEach(function(LabPro){ %>
+		  <script type="text/javascript">
+			  matrizPLabPro.push(['<%= LabPro.nombreEmpresa %>','<%= LabPro.ulSalario %>','<%= LabPro.profesion %>',
+									  '<%= LabPro.aniosExp %>','<%= LabPro.puestos %>']);
+		  </script>
+	  <% }) %>
+	  <% condiciones.forEach(function(condicion){ %>
+		  <script type="text/javascript">
+			  matrizPCondiciones.push(['<%= condicion.posPuestos %>','<%= condicion.contrato %>','<%= condicion.salario %>']);
+		  </script>
+	  <% }) %>
 
 
 
@@ -178,17 +179,17 @@
                       <th scope="col">Clase</th>
                     </tr>
                   </thead>
-                  <% personas.forEach(function(persona){ %>
-                     <tr>
-                         <script type="text/javascript">
-                            matrizPersonas.push(['<%= persona.id %>','<%= persona.nombre %>','<%= persona.celular %>','<%= persona.correo %>','<%= persona.edad %>','<%= persona.estadoCivil %>']);
-                         </script>
-                          <td><button type="button" id=<%= persona.indice %> class='btn btn-danger' onclick="visualizarPersona(this.id)">Ver</button></td>
-                          <td><%= persona.nombre %></td>
-                          <td><%= persona.celular %></td>
-                          <td>*****</td>
-                    </tr>
-                  <% }) %>
+			  <% personas.forEach(function(persona){ %>
+				 <tr>
+					 <script type="text/javascript">					
+						matrizPersonas.push(['<%= persona.id %>','<%= persona.nombre %>','<%= persona.celular %>','<%= persona.correo %>','<%= persona.edad %>','<%= persona.estadoCivil %>']);                    
+					 </script>
+					  <td><button type="button" id=<%= persona.indice %> class='btn btn-danger' onclick="colocarValores(this.id)">Ver</button></td>					  
+					  <td><%= persona.nombre %></td>
+					  <td><%= persona.celular %></td>
+					  <td>***</td>
+				</tr>
+			  <% }) %>
               </tbody>
              </table
          </div>
