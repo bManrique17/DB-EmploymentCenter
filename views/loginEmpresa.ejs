@@ -32,23 +32,23 @@
           function actualizarTabla(cc){
               $("#idEmpleo").val(matrizEmpleos[cc][0]);
               for (var i=1 ; i<=matrizPersonas.length ; i++){
-                  var fila = (parseInt(cc,10)+1);
-                  if(   (matrizPCondiciones[cc][0].includes(matrizEmpleos[cc][3],0) || matrizEmpleos[cc][3] == "N/A" || matrizEmpleos[cc][3] == "" )  &&
-                        (matrizPCondiciones[cc][2] == matrizEmpleos[cc][5] || matrizEmpleos[cc][5] == "N/A" || matrizEmpleos[cc][5] == "" ) &&
-                        (matrizPFamiliares[cc][6] == matrizEmpleos[cc][6] || matrizEmpleos[cc][6] == "N/A" || matrizEmpleos[cc][6] == "" ) &&
-                        (matrizPSanitarios[cc][1] == "N/A" || matrizPSanitarios[cc][1] == "" || matrizEmpleos[cc][7] == "Si") &&
-                        (matrizPSanitarios[cc][2] == "N/A" || matrizPSanitarios[cc][2] == "" || matrizEmpleos[cc][8] == "Si") &&
-                        (matrizPLegales[cc][0] == matrizEmpleos[cc][9] || matrizEmpleos[cc][9] == "N/A" || matrizEmpleos[cc][9] == "") &&
-                        (matrizPLegales[cc][1] == matrizEmpleos[cc][10] || matrizEmpleos[cc][10] == "N/A" || matrizEmpleos[cc][10] == "") &&
-                        (matrizPLabPro[cc][3] == matrizEmpleos[cc][11] || matrizEmpleos[cc][11] == "N/A" || matrizEmpleos[cc][11] == "" ) &&
-                        (matrizPLabPro[cc][2].includes(matrizEmpleos[cc][12],0) || matrizEmpleos[cc][12] == "N/A" || matrizEmpleos[cc][12] == "" ) &&
-                        (matrizPCondiciones[cc][1].includes(matrizEmpleos[cc][13],0) || matrizEmpleos[cc][13] == "N/A" || matrizEmpleos[cc][13] == "" )){
+                  var fila = i-1;
+                  if(   (matrizPCondiciones[fila][0].includes(matrizEmpleos[cc][3],0) || matrizEmpleos[cc][3] == "N/A" || matrizEmpleos[cc][3] == "" )  &&
+                        (matrizPCondiciones[fila][2] == matrizEmpleos[cc][5] || matrizEmpleos[cc][5] == "N/A" || matrizEmpleos[cc][5] == "" ) &&
+                        (matrizPFamiliares[fila][6] == matrizEmpleos[cc][6] || matrizEmpleos[cc][6] == "N/A" || matrizEmpleos[cc][6] == "" ) &&
+                        (matrizPSanitarios[fila][1] == "N/A" || matrizPSanitarios[fila][1] == "" || matrizEmpleos[cc][7] == "Si") &&
+                        (matrizPSanitarios[fila][2] == "N/A" || matrizPSanitarios[fila][2] == "" || matrizEmpleos[cc][8] == "Si") &&
+                        (matrizPLegales[fila][0] == matrizEmpleos[cc][9] || matrizEmpleos[cc][9] == "N/A" || matrizEmpleos[cc][9] == "") &&
+                        (matrizPLegales[fila][1] == matrizEmpleos[cc][10] || matrizEmpleos[cc][10] == "N/A" || matrizEmpleos[cc][10] == "") &&
+                        (matrizPLabPro[fila][3] == matrizEmpleos[cc][11] || matrizEmpleos[cc][11] == "N/A" || matrizEmpleos[cc][11] == "" ) &&
+                        (matrizPLabPro[fila][2].includes(matrizEmpleos[cc][12],0) || matrizEmpleos[cc][12] == "N/A" || matrizEmpleos[cc][12] == "" ) &&
+                        (matrizPCondiciones[fila][1].includes(matrizEmpleos[cc][13],0) || matrizEmpleos[cc][13] == "N/A" || matrizEmpleos[cc][13] == "" )){
 
                             document.getElementById('tablaPersonas').rows[i].cells[3].innerHTML = "A";
                   }else{
 
-                      if(   (matrizPCondiciones[cc][0].includes(matrizEmpleos[cc][3],0) || matrizEmpleos[cc][3] == "N/A" || matrizEmpleos[cc][3] == "" )  &&
-                            (matrizPCondiciones[cc][2] == matrizEmpleos[cc][5] || matrizEmpleos[cc][5] == "N/A" || matrizEmpleos[cc][5] == "" ) ){
+                      if(   (matrizPCondiciones[fila][0].includes(matrizEmpleos[cc][3],0) || matrizEmpleos[cc][3] == "N/A" || matrizEmpleos[cc][3] == "" )  &&
+                            (matrizPCondiciones[fila][2] == matrizEmpleos[cc][5] || matrizEmpleos[cc][5] == "N/A" || matrizEmpleos[cc][5] == "" ) ){
 
                                 document.getElementById('tablaPersonas').rows[i].cells[3].innerHTML = "B";
                       }else{
