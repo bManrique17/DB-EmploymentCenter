@@ -158,7 +158,7 @@
                                '<%= empleo.hospital %>','<%= empleo.militar %>','<%= empleo.carcel %>','<%= empleo.aniosExp %>',
                                '<%= empleo.profesion %>','<%= empleo.contrato %>']);
                     </script>
-                     <td><button type="button" id=<%= empleo.indice %> class='btn btn-danger' onclick="visualizarPersona(this.id)">Ver</button></td>
+                     <td><button type="button" id=<%= empleo.indice %> class='btn btn-danger' onclick="actualizarTabla(this.id)">Ver</button></td>
                      <td><%= empleo.nombreEmpresa %></td>
                      <td><%= empleo.puesto %></td>
                      <td><%= empleo.salario %></td>
@@ -184,7 +184,7 @@
 					 <script type="text/javascript">					
 						matrizPersonas.push(['<%= persona.id %>','<%= persona.nombre %>','<%= persona.celular %>','<%= persona.correo %>','<%= persona.edad %>','<%= persona.estadoCivil %>']);                    
 					 </script>
-					  <td><button type="button" id=<%= persona.indice %> class='btn btn-danger' onclick="colocarValores(this.id)">Ver</button></td>					  
+					  <td><button type="button" id=<%= persona.indice %> class='btn btn-danger' onclick="visualizarPersona(this.id)">Ver</button></td>					  
 					  <td><%= persona.nombre %></td>
 					  <td><%= persona.celular %></td>
 					  <td>***</td>
