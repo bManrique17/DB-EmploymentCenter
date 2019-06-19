@@ -1017,7 +1017,7 @@ app.post('/loginEmpresaGO', function(req, res){
             condiciones:arrayCondiciones,
             empleos: arrayEmpleo,
 
-            nombreEmpresa: nombre
+            nombreEmpresa: nombre,
 			rtn: rtn
         });
         session.close();
