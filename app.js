@@ -1292,7 +1292,8 @@ app.post('/ofrecerContrato',function(req, res){
 				condiciones:arrayCondiciones,
 				empleos: arrayEmpleo,
 
-				nombreEmpresa: nombre
+				nombreEmpresa: nombre,
+				rtn: rtn
 			});
 			session.close();
 		})
@@ -1302,20 +1303,6 @@ app.post('/ofrecerContrato',function(req, res){
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-        res.render('index',{
-
-        });
         session.close();
     })
     .catch(function(err){
